@@ -1,6 +1,7 @@
 import Clutter from 'gi://Clutter';
 import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
+import Pango from 'gi://Pango';
 import St from 'gi://St';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
@@ -20,6 +21,9 @@ class AeraClockButton extends PanelMenu.Button {
             y_align: Clutter.ActorAlign.CENTER,
         });
 
+        if (this._label.clutter_text)
+            this._label.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
+
         this.add_child(this._label);
     }
 
@@ -30,6 +34,15 @@ class AeraClockButton extends PanelMenu.Button {
 
 export default class AeraClockExtension extends Extension {
     enable() {
+        // Defensive cleanup in case of re-enable or previous unclean state
+        if (Main.panel.statusArea[this.uuid]) {
+            try {
+                Main.panel.statusArea[this.uuid].destroy();
+            } catch (e) {
+                delete Main.panel.statusArea[this.uuid];
+            }
+        }
+
         this._indicator = new AeraClockButton();
         Main.panel.addToStatusArea(this.uuid, this._indicator, 0, 'center');
 
