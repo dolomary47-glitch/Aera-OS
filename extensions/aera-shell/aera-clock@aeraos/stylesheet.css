@@ -1,22 +1,31 @@
-.aera-clock-widget {
+.aera-clock-container {
+    background-color: transparent;
+}
+
+.aera-clock-card {
+    background-color: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 28px;
+    padding: 22px 52px;
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.22);
     text-align: center;
 }
 
 .aera-clock-time {
-    font-size: 80px;
+    font-size: 76px;
     font-weight: 700;
-    color: #cad8e6;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
     letter-spacing: 2px;
 }
 
 .aera-clock-date {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
-    color: #9cb0c3;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
     text-align: center;
-    padding-top: 6px;
+    padding-top: 4px;
     letter-spacing: 1px;
 }

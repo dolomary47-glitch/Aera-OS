@@ -1,6 +1,7 @@
 import Clutter from 'gi://Clutter';
 import GLib from 'gi://GLib';
 import Pango from 'gi://Pango';
+import Shell from 'gi://Shell';
 import St from 'gi://St';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
@@ -8,7 +9,6 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class AeraClockExtension extends Extension {
     enable() {
-        // Clean up any previous panel indicator if upgrading
         if (Main.panel.statusArea && Main.panel.statusArea[this.uuid]) {
             try {
                 Main.panel.statusArea[this.uuid].destroy();
@@ -30,7 +30,7 @@ export default class AeraClockExtension extends Extension {
 
         this._timeLabel = new St.Label({
             style_class: 'aera-clock-time',
-            style: 'font-size: 78px; font-weight: 700; color: #cad8e6; text-align: center;',
+            style: 'font-size: 76px; font-weight: 700; color: #ffffff; text-align: center;',
             text: '',
             x_align: Clutter.ActorAlign.CENTER,
             x_expand: true,
@@ -38,7 +38,7 @@ export default class AeraClockExtension extends Extension {
 
         this._dateLabel = new St.Label({
             style_class: 'aera-clock-date',
-            style: 'font-size: 18px; font-weight: 500; color: #9cb0c3; text-align: center; padding-top: 6px;',
+            style: 'font-size: 17px; font-weight: 500; color: rgba(255, 255, 255, 0.85); text-align: center; padding-top: 4px;',
             text: '',
             x_align: Clutter.ActorAlign.CENTER,
             x_expand: true,
@@ -50,21 +50,46 @@ export default class AeraClockExtension extends Extension {
         if (this._dateLabel.clutter_text)
             this._dateLabel.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
 
-        this._container = new St.BoxLayout({
-            name: 'AeraClockWidget',
-            style_class: 'aera-clock-widget',
+        // Centered glassmorphic card
+        this._card = new St.BoxLayout({
+            name: 'AeraClockCard',
+            style_class: 'aera-clock-card',
             vertical: true,
             reactive: false,
             can_focus: false,
             track_hover: false,
             x_align: Clutter.ActorAlign.CENTER,
             y_align: Clutter.ActorAlign.CENTER,
+            style: 'background-color: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 28px; padding: 22px 52px; box-shadow: 0 10px 36px rgba(0, 0, 0, 0.22);',
         });
 
-        this._container.add_child(this._timeLabel);
-        this._container.add_child(this._dateLabel);
+        // Add blur effect if available
+        try {
+            this._blurEffect = new Shell.BlurEffect({
+                mode: Shell.BlurMode.BACKGROUND,
+                radius: 25,
+                brightness: 0.95,
+            });
+            this._card.add_effect(this._blurEffect);
+        } catch (e) {
+            // Optional enhancement if blur is unsupported in current driver
+        }
 
-        // Add behind windows onto the desktop wallpaper layer
+        this._card.add_child(this._timeLabel);
+        this._card.add_child(this._dateLabel);
+
+        // Screen-wide positioning wrapper
+        this._container = new St.Widget({
+            name: 'AeraClockContainer',
+            style_class: 'aera-clock-container',
+            layout_manager: new Clutter.BinLayout(),
+            reactive: false,
+            can_focus: false,
+            track_hover: false,
+        });
+
+        this._container.add_child(this._card);
+
         Main.layoutManager._backgroundGroup.add_child(this._container);
 
         this._reposition();
@@ -85,8 +110,6 @@ export default class AeraClockExtension extends Extension {
             return;
 
         this._container.set_width(monitor.width);
-
-        // Position in the upper-middle area (approx 22% from top, matching the Aera OS concept)
         const y = monitor.y + Math.round(monitor.height * 0.22);
         this._container.set_position(monitor.x, y);
     }
@@ -139,8 +162,10 @@ export default class AeraClockExtension extends Extension {
             this._container = null;
         }
 
+        this._card = null;
         this._timeLabel = null;
         this._dateLabel = null;
+        this._blurEffect = null;
     }
 
     disable() {
