@@ -1,0 +1,6 @@
+{
+  "uuid": "aera-clock@aeraos",
+  "name": "Aera Clock",
+  "description": "A minimal centered clock for Aera OS.",
+  "shell-version": ["46"]
+}
