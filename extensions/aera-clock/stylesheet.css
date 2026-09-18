@@ -1,9 +1,22 @@
-.aera-clock-button {
-    padding: 0 12px;
+.aera-clock-widget {
+    text-align: center;
 }
 
-.aera-clock-label {
-    font-size: 14px;
-    font-weight: 600;
+.aera-clock-time {
+    font-size: 80px;
+    font-weight: 700;
+    color: #cad8e6;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
     text-align: center;
+    letter-spacing: 2px;
+}
+
+.aera-clock-date {
+    font-size: 18px;
+    font-weight: 500;
+    color: #9cb0c3;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding-top: 6px;
+    letter-spacing: 1px;
 }
