@@ -1,0 +1,8 @@
+{
+  "name": "aera-shell",
+  "description": "The shell for Aera OS.",
+  "uuid": "aerashell@aerasos.dev.com",
+  "shell-version": [
+    "46"
+  ]
+}
