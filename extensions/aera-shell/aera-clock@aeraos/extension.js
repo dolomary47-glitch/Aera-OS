@@ -1,3 +1,10 @@
+/**
+ * Aera Clock — GNOME Shell Extension
+ * Part of Aera OS Design System V1
+ *
+ * Tokens consumed from: ./aera-tokens.js → design-system/aera-tokens.js
+ */
+
 import Clutter from 'gi://Clutter';
 import GLib from 'gi://GLib';
 import Pango from 'gi://Pango';
@@ -5,13 +12,13 @@ import St from 'gi://St';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as T from './aera-tokens.js';
 
 export default class AeraClockExtension extends Extension {
     enable() {
+        // Guard: clean up any stale panel indicator from a previous version
         if (Main.panel.statusArea && Main.panel.statusArea[this.uuid]) {
-            try {
-                Main.panel.statusArea[this.uuid].destroy();
-            } catch (e) {}
+            try { Main.panel.statusArea[this.uuid].destroy(); } catch (e) {}
             delete Main.panel.statusArea[this.uuid];
         }
 
@@ -27,6 +34,7 @@ export default class AeraClockExtension extends Extension {
     _buildWidget() {
         this._destroyWidget();
 
+        // ── Time label — type.display ───────────────────────────────────────
         this._timeLabel = new St.Label({
             style_class: 'aera-clock-time',
             text: '',
@@ -34,6 +42,7 @@ export default class AeraClockExtension extends Extension {
             x_expand: true,
         });
 
+        // ── Date label — type.metric ────────────────────────────────────────
         this._dateLabel = new St.Label({
             style_class: 'aera-clock-date',
             text: '',
@@ -43,11 +52,11 @@ export default class AeraClockExtension extends Extension {
 
         if (this._timeLabel.clutter_text)
             this._timeLabel.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
-
         if (this._dateLabel.clutter_text)
             this._dateLabel.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
 
-        // Simple vertical box — no card, no background
+        // ── Vertical box — no background, no card ──────────────────────────
+        // Token usage: space.2 (8px) gap via CSS padding-top on date label
         this._box = new St.BoxLayout({
             name: 'AeraClockBox',
             vertical: true,
@@ -61,7 +70,7 @@ export default class AeraClockExtension extends Extension {
         this._box.add_child(this._timeLabel);
         this._box.add_child(this._dateLabel);
 
-        // Screen-wide positioning wrapper
+        // ── Screen-wide positioning wrapper ────────────────────────────────
         this._container = new St.Widget({
             name: 'AeraClockContainer',
             style_class: 'aera-clock-container',
@@ -73,10 +82,12 @@ export default class AeraClockExtension extends Extension {
 
         this._container.add_child(this._box);
 
+        // Attach behind all windows, on the desktop background layer
         Main.layoutManager._backgroundGroup.add_child(this._container);
 
         this._reposition();
 
+        // Deferred reposition after layout settles
         this._repositionTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
             this._reposition();
             this._repositionTimeoutId = null;
@@ -93,6 +104,8 @@ export default class AeraClockExtension extends Extension {
             return;
 
         this._container.set_width(monitor.width);
+        // Position at 22% from top — intentional: gives space above for panel/notch area
+        // Token reference: no explicit position token in V1; this is component-specific layout.
         const y = monitor.y + Math.round(monitor.height * 0.22);
         this._container.set_position(monitor.x, y);
     }
@@ -103,7 +116,9 @@ export default class AeraClockExtension extends Extension {
 
         const now = GLib.DateTime.new_now_local();
         this._timeLabel.set_text(now.format('%H:%M'));
-        this._dateLabel.set_text(now.format('%a %e %b %Y').replace(/\s+/g, ' ').trim());
+        this._dateLabel.set_text(
+            now.format('%a %e %b %Y').replace(/\s+/g, ' ').trim()
+        );
     }
 
     _scheduleNextTick() {
@@ -140,7 +155,6 @@ export default class AeraClockExtension extends Extension {
             const parent = this._container.get_parent();
             if (parent)
                 parent.remove_child(this._container);
-
             this._container.destroy();
             this._container = null;
         }

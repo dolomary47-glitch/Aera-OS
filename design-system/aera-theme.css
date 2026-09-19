@@ -1,0 +1,179 @@
+/**
+ * Aera OS — Reference Theme CSS
+ * ============================================================
+ * This file is the CSS reference for all Aera OS extensions.
+ *
+ * IMPORTANT — GNOME Shell CSS constraints:
+ *   - CSS custom properties (var(--x)) are NOT supported.
+ *   - backdrop-filter is NOT supported.
+ *   - filter: is NOT supported.
+ *   - :-gtk-dark IS supported for light/dark mode switching.
+ *
+ * HOW TO USE THIS FILE:
+ *   GNOME Shell cannot load CSS from an arbitrary path outside an extension.
+ *   Each extension must have its own stylesheet.css loaded by the system.
+ *   Copy the relevant class definitions from this file into your extension's
+ *   stylesheet.css. Do NOT reinvent the values — copy them from here.
+ *
+ *   When a token value changes, update tokens.json, aera-tokens.js, AND
+ *   this file. Then update each extension's stylesheet.css accordingly.
+ *
+ * Source of truth: design-system/tokens.json
+ * ============================================================
+ */
+
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY — from tokens.typography
+   ═══════════════════════════════════════════════════════════ */
+
+/* type.display — 80px / 700 — Hero numbers, clock face */
+.aera-type-display {
+    font-size: 80px;
+    font-weight: 700;
+}
+
+/* type.metric — 20px / 600 — Important values, date line */
+.aera-type-metric {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* type.label — 13px / 500 — Labels, controls */
+.aera-type-label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* type.caption — 11px / 400 — Dates, metadata */
+.aera-type-caption {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TEXT COLORS — from tokens.colors.light/dark.text
+   Light mode (default), dark mode via :-gtk-dark
+   ═══════════════════════════════════════════════════════════ */
+
+/* light.text.primary = #FFFFFF */
+.aera-text-primary            { color: #FFFFFF; }
+:-gtk-dark .aera-text-primary { color: #FFFFFF; }
+
+/* light.text.secondary = rgba(255,255,255,0.72) */
+.aera-text-secondary            { color: rgba(255, 255, 255, 0.72); }
+:-gtk-dark .aera-text-secondary { color: #C6CBD3; }
+
+/* light.text.muted = rgba(255,255,255,0.55) */
+.aera-text-muted            { color: rgba(255, 255, 255, 0.55); }
+:-gtk-dark .aera-text-muted { color: #9E9E9E; }
+
+/* light.text.disabled = rgba(255,255,255,0.40) */
+.aera-text-disabled            { color: rgba(255, 255, 255, 0.40); }
+:-gtk-dark .aera-text-disabled { color: rgba(255, 255, 255, 0.40); }
+
+/* Accent */
+.aera-text-accent { color: #03DFF8; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   GLASS SURFACES — from tokens.glass
+   Note: backdrop-filter not supported in GNOME Shell CSS.
+   Blur effect must be applied via Shell.BlurEffect in GJS.
+   ═══════════════════════════════════════════════════════════ */
+
+/* glass.light.background + glass.light.border */
+.aera-glass {
+    background-color: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.40);
+}
+:-gtk-dark .aera-glass {
+    background-color: rgba(20, 25, 35, 0.70);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+}
+
+/* glass.light.strong */
+.aera-glass-strong {
+    background-color: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.40);
+}
+:-gtk-dark .aera-glass-strong {
+    background-color: rgba(20, 25, 35, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+}
+
+/* glass.inner (nested surface) */
+.aera-glass-inner {
+    background-color: rgba(255, 255, 255, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+:-gtk-dark .aera-glass-inner {
+    background-color: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   RADIUS — from tokens.radius
+   ═══════════════════════════════════════════════════════════ */
+
+.aera-radius-sm   { border-radius: 8px; }
+.aera-radius-md   { border-radius: 12px; }
+.aera-radius-lg   { border-radius: 16px; }
+.aera-radius-xl   { border-radius: 20px; }
+.aera-radius-2xl  { border-radius: 24px; }
+.aera-radius-pill { border-radius: 999px; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   SHADOWS — from tokens.shadows
+   ═══════════════════════════════════════════════════════════ */
+
+/* shadow.floating */
+.aera-shadow-floating {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* shadow.subtle */
+.aera-shadow-subtle {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ACCENT — from tokens.colors.accent
+   ═══════════════════════════════════════════════════════════ */
+
+.aera-accent-bg {
+    background-color: #03DFF8;
+    color: #061316;
+}
+
+.aera-accent-border {
+    border: 1px solid #03DFF8;
+}
+
+/* Accent glow — used for focus rings */
+.aera-focus {
+    border: 2px solid #03DFF8;
+    box-shadow: 0 0 0 3px rgba(3, 223, 248, 0.35);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   STATES — from tokens.states
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hover: adds ~10% white presence */
+.aera-glass:hover {
+    background-color: rgba(255, 255, 255, 0.45);
+}
+:-gtk-dark .aera-glass:hover {
+    background-color: rgba(20, 25, 35, 0.80);
+}
+
+/* Disabled */
+.aera-disabled {
+    opacity: 0.40;
+}

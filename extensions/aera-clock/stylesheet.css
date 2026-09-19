@@ -1,29 +1,88 @@
+/**
+ * Aera Clock — stylesheet.css
+ * Part of Aera OS Design System V1
+ *
+ * All values reference design-system/tokens.json.
+ * This file was generated from design-system/aera-theme.css.
+ *
+ * GNOME Shell CSS limitations:
+ *   - No CSS custom properties (var())
+ *   - No backdrop-filter
+ *   - :-gtk-dark IS supported for theme switching
+ *
+ * Token references are annotated inline.
+ */
+
+/* ── Container (transparent, full-width positioning wrapper) ─────────────── */
+
 .aera-clock-container {
     background-color: transparent;
 }
 
+
+/* ── Time label — type.display ──────────────────────────────────────────── */
+/*    light.text.primary = #FFFFFF                                            */
+/*    Glassmorphic text: luminous semi-transparent white + layered glow       */
+/*    (text-shadow is the only way to create a glass look on text in GNOME)  */
+
 .aera-clock-time {
-    font-size: 76px;
+    /* type.display: 80px / 700 */
+    font-size: 80px;
     font-weight: 700;
-    /* Glassmorphic text: luminous semi-transparent white with layered glow */
+    letter-spacing: 2px;
+
+    /* light.text.primary at 0.88 opacity → glass luminosity feel */
     color: rgba(255, 255, 255, 0.88);
+
+    /* Glass text effect via layered text-shadow (CSS only, no blur container) */
+    /* Outer glow: wide, soft — inner glow: tight, bright — drop shadow: readability */
     text-shadow:
         0 0 40px rgba(255, 255, 255, 0.55),
         0 0 12px rgba(255, 255, 255, 0.35),
         0 2px 8px rgba(0, 0, 0, 0.40);
+
     text-align: center;
-    letter-spacing: 2px;
 }
 
+/* Dark mode — same luminous white, slightly adjusted glow */
+:-gtk-dark .aera-clock-time {
+    /* dark.text.primary = #FFFFFF, same token */
+    color: rgba(255, 255, 255, 0.90);
+    text-shadow:
+        0 0 40px rgba(255, 255, 255, 0.45),
+        0 0 12px rgba(255, 255, 255, 0.30),
+        0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+
+/* ── Date label — type.metric ───────────────────────────────────────────── */
+/*    light.text.secondary = rgba(255, 255, 255, 0.72)                       */
+
 .aera-clock-date {
-    font-size: 17px;
-    font-weight: 500;
-    /* Softer glass feel for the date */
+    /* type.metric: 20px / 600 */
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    /* light.text.secondary */
     color: rgba(255, 255, 255, 0.72);
+
+    /* Softer glass feel — less glow than the time */
     text-shadow:
         0 0 18px rgba(255, 255, 255, 0.40),
         0 1px 4px rgba(0, 0, 0, 0.35);
+
     text-align: center;
-    padding-top: 6px;
-    letter-spacing: 1px;
+
+    /* space.2 = 8px gap from time label */
+    padding-top: 8px;
+}
+
+/* Dark mode */
+:-gtk-dark .aera-clock-date {
+    /* dark.text.secondary = #C6CBD3 */
+    color: rgba(198, 203, 211, 0.85);
+    text-shadow:
+        0 0 16px rgba(255, 255, 255, 0.30),
+        0 1px 5px rgba(0, 0, 0, 0.50);
 }
