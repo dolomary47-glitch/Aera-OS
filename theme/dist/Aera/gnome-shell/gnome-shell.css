@@ -912,13 +912,13 @@ StScrollBar StButton#hhandle:active {
 	box-shadow: inset 0 0 0 0px rgba(255, 255, 255, 0);
 	/* fix default dash focused box-shadow*/
 	transition-duration: 100ms;
-	border-radius: 20px;
+	border-radius: 10px;
 	color: rgba(242, 242, 242, 1);
 	background-color: transparent;
 }
 
 #dashtodockContainer #dash .overview-tile .overview-icon {
-	border-radius: 16px;
+	border-radius: 8px;
 }
 
 #dash .dash-item-container .overview-tile:hover,
@@ -983,8 +983,8 @@ StScrollBar StButton#hhandle:active {
 #dash .dash-item-container .overview-tile:selected .overview-icon,
 /* 46+ */
 #dash .dash-item-container .show-apps:checked .overview-icon {
-	box-shadow: inset 0 0 4px 1px rgba(191, 191, 191, 0.4);
-	background-color: rgba(255, 255, 255, 0.1);
+	box-shadow: none;
+	background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* effect when creating new folder */
@@ -1109,13 +1109,13 @@ StScrollBar StButton#hhandle:active {
 	border: none;
 	/* remove black border on ubuntu */
 	padding: 4px 2px 4px 2px;
-	border-radius: 23px;
+	border-radius: 10px;
 }
 
 /* if used Dash to Dock extension */
 #dashtodockContainer #dash .dash-background {
 	border: none;
-	border-radius: 18px;
+	border-radius: 10px;
 	transition-duration: 250ms;
 }
 
@@ -1123,16 +1123,17 @@ StScrollBar StButton#hhandle:active {
 #dashtodockContainer.overview #dash .dash-background {
 	box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.07);
 	background-color: rgba(255, 255, 255, 0.12);
+	border-radius: 10px;
 }
 
 /* popup label when hovering the app in dash */
 .dash-label {
 	background-color: rgba(36, 36, 36, 0.95);
 	color: rgba(242, 242, 242, 1);
-	border-radius: 12px;
-	padding: 6px 12px;
+	border-radius: 6px;
+	padding: 5px 10px;
 	border: 1px solid rgba(255, 255, 255, 0.07);
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.08);
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 
@@ -1172,7 +1173,7 @@ StScrollBar StButton#hhandle:active {
 /* elements in dash */
 .dash-item-container .app-well-app .overview-icon,
 .dash-item-container .show-apps .overview-icon {
-	border-radius: 21px;
+	border-radius: 8px;
 }
 
 
@@ -1193,7 +1194,7 @@ StScrollBar StButton#hhandle:active {
 #dashtodockContainer .show-apps:active .overview-icon,
 #dashtodockContainer .show-apps:checked .overview-icon,
 #dashtodockContainer .app-well-app.focused .overview-icon {
-	border-radius: 15px;
+	border-radius: 8px;
 }
 
 #dashtodockContainer .app-well-app.focused .overview-icon,
@@ -1203,7 +1204,8 @@ StScrollBar StButton#hhandle:active {
 .show-apps:selected:hover .overview-icon,
 .show-apps:active .overview-icon,
 .show-apps:checked .overview-icon {
-	box-shadow: inset 0 0 4px 1px rgba(191, 191, 191, 0.4);
+	box-shadow: none;
+	background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* ubuntu fix */
