@@ -1,0 +1,169 @@
+// =============================================================================
+// Aera OS — OSD Windows, App Switcher (Alt+Tab) & LookingGlass
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+/* OSD Window (Volume, Brightness, CapsLock) */
+.osd-window {
+    text-align: center;
+    font-weight: 700;
+    spacing: $space-3;
+    margin: $space-8;
+    min-width: 90px;
+    min-height: 90px;
+    border-radius: $radius-2xl;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    color: $text-primary;
+    padding: $space-4;
+
+    .osd-monitor-label {
+        font-size: 3em;
+        font-weight: 700;
+        color: $text-primary;
+    }
+
+    .level {
+        height: 6px;
+        border-radius: $radius-pill;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: $accent-primary;
+    }
+}
+
+/* App Switcher (Alt + Tab) */
+.switcher-popup {
+    padding: $space-2;
+    spacing: $space-4;
+}
+
+.switcher-list {
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    border-radius: $radius-2xl;
+    padding: $space-3;
+    box-shadow: $shadow-floating;
+    color: $text-primary;
+
+    .item-box {
+        padding: $space-2 $space-3;
+        border-radius: $radius-lg;
+        transition-duration: $duration-fast;
+
+        &:outlined {
+            border: 2px solid $border-glass;
+        }
+
+        &:selected {
+            background-color: rgba(3, 223, 248, 0.20);
+            box-shadow: inset 0 -3px 0 0 $accent-primary, 0 0 12px $accent-glow;
+            color: $text-primary;
+            font-weight: 700;
+        }
+    }
+
+    .thumbnail-box {
+        padding: 2px;
+        spacing: $space-1;
+    }
+
+    .thumbnail {
+        width: 256px;
+        border-radius: $radius-md;
+    }
+
+    .separator {
+        width: 1px;
+        background-color: $border-subtle;
+    }
+}
+
+.switcher-arrow {
+    border-color: transparent;
+    color: $text-muted;
+
+    &:highlighted {
+        color: $accent-primary;
+    }
+}
+
+.input-source-switcher-symbol {
+    font-size: 34pt;
+    font-weight: 700;
+    width: 96px;
+    height: 96px;
+    color: $text-primary;
+}
+
+/* Workspace Switcher Popup */
+.workspace-switcher-group {
+    padding: $space-3;
+}
+
+.workspace-switcher {
+    background: transparent;
+    border: none;
+    border-radius: $radius-xl;
+    padding: 0;
+    spacing: $space-3;
+}
+
+.ws-switcher-box {
+    height: 50px;
+    border: 1px solid $border-subtle;
+    background-color: $card-bg;
+    border-radius: $radius-md;
+}
+
+.ws-switcher-active-up,
+.ws-switcher-active-down {
+    height: 50px;
+    background-color: $accent-primary;
+    color: $accent-on-primary;
+    border-radius: $radius-md;
+    box-shadow: 0 0 12px $accent-glow;
+}
+
+/* Tiled Window Previews */
+.tile-preview {
+    background-color: rgba(3, 223, 248, 0.20);
+    border: 2px solid $accent-primary;
+    box-shadow: 0 0 16px $accent-glow;
+
+    &.tile-preview-left.on-primary {
+        border-radius: $radius-lg $radius-lg 0 0;
+    }
+
+    &.tile-preview-right.on-primary {
+        border-radius: 0 $radius-lg 0 0;
+    }
+}
+
+/* LookingGlass Debugging Dialog */
+#LookingGlassDialog {
+    background-color: $glass-strong-bg;
+    spacing: $space-1;
+    padding: $space-2;
+    border: 1px solid $border-glass;
+    border-top-width: 0;
+    border-radius: 0 0 $radius-xl $radius-xl;
+    box-shadow: $shadow-floating;
+
+    .notebook-tab {
+        font-weight: 700;
+        color: $text-secondary;
+        padding: $space-1 $space-3;
+        border-radius: $radius-sm;
+
+        &:hover {
+            color: $text-primary;
+            background-color: rgba(255, 255, 255, 0.10);
+        }
+
+        &:selected {
+            border-bottom: 2px solid $accent-primary;
+            color: $accent-primary;
+        }
+    }
+}

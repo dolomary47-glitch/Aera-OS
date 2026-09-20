@@ -1,0 +1,19 @@
+// =============================================================================
+// Aera OS — GNOME Shell Theme (Dark Variant)
+// Production theme entry point
+// =============================================================================
+
+@import "tokens/tokens";
+@import "tokens/dark-tokens";
+
+@import "components/base";
+@import "components/panel";
+@import "components/menus";
+@import "components/quick-settings";
+@import "components/calendar";
+@import "components/notifications";
+@import "components/overview";
+@import "components/app-grid";
+@import "components/search";
+@import "components/dialogs";
+@import "components/osd-switcher";

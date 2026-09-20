@@ -1,0 +1,186 @@
+// =============================================================================
+// Aera OS — Calendar & DateMenu
+// Clean frosted cards, high contrast day numbers, glowing today indicator
+// =============================================================================
+
+#calendarArea {
+    color: $text-primary;
+}
+
+.datemenu-today-button {
+    border-radius: $radius-xl;
+    padding: $space-2 $space-3;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.14);
+    }
+
+    &:active {
+        background-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .date-label {
+        font-size: 22px;
+        font-weight: 700;
+        color: $text-primary;
+    }
+
+    .day-label {
+        font-size: $type-label-size;
+        font-weight: 600;
+        color: $text-secondary;
+    }
+}
+
+.calendar {
+    margin-bottom: $space-3;
+    padding: $space-3;
+    border-radius: $radius-2xl;
+    background-color: $card-bg;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-subtle;
+}
+
+.calendar-month-header {
+    .calendar-month-label {
+        color: $text-primary;
+        font-weight: 700;
+        font-size: 14px;
+        padding: $space-2 0;
+    }
+
+    .pager-button {
+        color: $text-primary;
+        background-color: $surface-inner;
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-pill;
+        border: 1px solid $border-subtle;
+        transition-duration: $duration-fast;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.22);
+            border-color: $border-glass;
+            color: $accent-primary;
+        }
+
+        &:active {
+            background-color: $accent-primary;
+            color: $accent-on-primary;
+        }
+    }
+}
+
+.calendar-day-base {
+    text-align: center;
+    width: 2.4em;
+    height: 2.4em;
+    padding: 0.1em;
+    margin: 2px;
+    border-radius: $radius-pill;
+    font-size: 95%;
+    font-weight: 600;
+    color: $text-primary;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        background-color: rgba(3, 223, 248, 0.20);
+        color: $accent-primary;
+    }
+
+    &:active {
+        background-color: $accent-pressed;
+        color: $accent-on-primary;
+    }
+
+    &.calendar-day-heading {
+        color: $accent-primary;
+        font-weight: 700;
+        font-size: 80%;
+    }
+}
+
+.calendar-day {
+    border-width: 0;
+}
+
+.calendar-today {
+    background-color: $accent-primary;
+    color: $accent-on-primary;
+    font-weight: 700;
+    box-shadow: 0 0 12px $accent-glow;
+}
+
+.calendar-day-with-events {
+    font-weight: 700;
+    background-image: url("assets/calendar-today.svg");
+    background-position: center bottom;
+    background-size: 4px 4px;
+}
+
+.calendar-other-month-day {
+    color: $text-muted;
+    font-weight: 400;
+}
+
+.calendar-nonwork-day {
+    color: #ff6b6b;
+}
+
+/* Event, World Clock, and Weather Cards */
+.events-button,
+.world-clocks-button,
+.weather-button {
+    border-radius: $radius-xl;
+    padding: $space-3;
+    margin: $space-2 0;
+    background-color: $card-bg;
+    border: 1px solid $border-subtle;
+    color: $text-primary;
+    box-shadow: $shadow-subtle;
+    font-weight: 600;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.16);
+        border-color: $border-glass;
+    }
+
+    .events-title,
+    .world-clocks-header,
+    .weather-header {
+        font-weight: 700;
+        color: $text-primary;
+    }
+}
+
+/* Message List inside Calendar / Notification Center */
+.message-list {
+    width: 380px;
+
+    .message-list-sections {
+        spacing: $space-3;
+    }
+
+    .message-list-section-title {
+        color: $accent-primary;
+        font-weight: 700;
+        font-size: $type-label-size;
+        padding: $space-1 $space-2;
+    }
+
+    .message-list-clear-button.button {
+        background-color: $card-bg;
+        color: $text-secondary;
+        border-radius: $radius-md;
+        margin: $space-2 $space-2 0;
+        border: 1px solid $border-subtle;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.18);
+            color: $text-primary;
+            border-color: $border-glass;
+        }
+    }
+}

@@ -1,0 +1,117 @@
+// =============================================================================
+// Aera OS — Overview, Dash / Dock & Window Picker
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+#overview {
+    spacing: $space-6;
+    background-color: transparent;
+}
+
+.overview-controls {
+    padding-bottom: $space-8;
+}
+
+/* Window Picker */
+.window-picker {
+    -horizontal-spacing: $space-8;
+    -vertical-spacing: $space-8;
+    padding: $space-6;
+
+    &.external-monitor {
+        padding: $space-8;
+    }
+}
+
+.window-clone-border {
+    border: 3px solid $accent-primary;
+    border-radius: $radius-lg;
+    box-shadow: 0 0 20px $accent-glow;
+}
+
+.window-caption {
+    spacing: $space-4;
+    color: $text-primary;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    border-radius: $radius-md;
+    padding: $space-1 $space-3;
+    font-weight: 600;
+    box-shadow: $shadow-subtle;
+    -shell-caption-spacing: 12px;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        color: $text-primary;
+    }
+}
+
+.window-close {
+    background-image: url("assets/close-window.svg");
+    background-size: 32px;
+    height: 32px;
+    width: 32px;
+    -shell-close-overlap: 16px;
+
+    &:hover {
+        background-image: url("assets/close-window-hover.svg");
+    }
+
+    &:active {
+        background-image: url("assets/close-window-active.svg");
+    }
+}
+
+/* Dash / Dock */
+#dash {
+    background-color: $glass-bg;
+    border: 1px solid $border-glass;
+    border-radius: $radius-2xl;
+    padding: $space-1 $space-2;
+    margin: $space-3;
+    box-shadow: $shadow-floating;
+
+    .placeholder {
+        height: 48px;
+        background-image: none;
+        border-radius: $radius-md;
+    }
+
+    .empty-dash-drop-target {
+        width: 24px;
+        height: 24px;
+    }
+
+    .overview-icon {
+        color: $text-primary;
+    }
+}
+
+.dash-label {
+    border-radius: $radius-pill;
+    padding: $space-1 $space-3;
+    color: $text-primary;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    font-weight: 600;
+    text-align: center;
+    -x-offset: 8px;
+}
+
+/* Workspace Thumbnails (Top Bar / Side Bar) */
+.workspace-thumbnails {
+    spacing: $space-3;
+    padding: $space-2 $space-3;
+    border-radius: $radius-xl;
+    background-color: $card-bg;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-subtle;
+}
+
+.workspace-thumbnail-indicator {
+    border: 3px solid $accent-primary;
+    border-radius: $radius-md;
+    box-shadow: 0 0 12px $accent-glow;
+    padding: 0;
+}

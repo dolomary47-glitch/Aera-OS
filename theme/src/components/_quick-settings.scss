@@ -1,0 +1,213 @@
+// =============================================================================
+// Aera OS — Quick Settings (GNOME 43–50)
+// High contrast, seamless pill styling, glowing active states
+// =============================================================================
+
+.quick-settings {
+    padding: $space-3;
+}
+
+.quick-settings-grid {
+    spacing-rows: $space-3;
+    spacing-columns: $space-3;
+}
+
+/* Quick Toggle & Composite Menu Toggle Base */
+.quick-toggle,
+.quick-menu-toggle {
+    border-radius: $radius-xl;
+    min-width: 12em;
+    max-width: 12em;
+    min-height: 3.2em;
+    border: 1px solid $border-subtle;
+    background-color: $card-bg;
+    color: $text-primary;
+    box-shadow: $shadow-subtle;
+    transition-duration: $duration-fast;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.16);
+        border-color: $border-glass;
+    }
+
+    &:focus {
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 2px $accent-primary, 0 0 8px $accent-glow;
+    }
+
+    .quick-toggle-title {
+        font-weight: 700;
+        font-size: $type-label-size;
+        color: $text-primary;
+    }
+
+    .quick-toggle-subtitle {
+        font-size: $type-caption-size;
+        color: $text-secondary;
+    }
+
+    .quick-toggle-icon {
+        icon-size: 18px;
+        color: $text-primary;
+    }
+}
+
+/* Active / Checked State for Toggles */
+.quick-toggle:checked,
+.quick-menu-toggle .quick-toggle:checked,
+.quick-menu-toggle .quick-toggle-arrow:checked,
+.quick-menu-toggle:checked .quick-toggle-arrow {
+    background-color: $accent-primary;
+    color: $accent-on-primary;
+    border-color: $accent-primary;
+    box-shadow: 0 0 14px $accent-glow;
+
+    &:hover {
+        background-color: $accent-hover;
+        border-color: $accent-hover;
+    }
+
+    &:active {
+        background-color: $accent-pressed;
+        border-color: $accent-pressed;
+    }
+
+    .quick-toggle-title,
+    .quick-toggle-subtitle,
+    .quick-toggle-icon,
+    StIcon,
+    StLabel {
+        color: $accent-on-primary;
+    }
+}
+
+/* Composite Split Toggle Architecture */
+.quick-menu-toggle {
+    .quick-toggle {
+        min-width: auto;
+        max-width: auto;
+        border: none;
+        box-shadow: none;
+
+        &:ltr {
+            border-radius: $radius-xl 0 0 $radius-xl;
+        }
+
+        &:rtl {
+            border-radius: 0 $radius-xl $radius-xl 0;
+        }
+    }
+
+    .quick-toggle-arrow {
+        border: none;
+        box-shadow: none;
+        padding: 0 $space-3;
+        background-color: $card-bg;
+        color: $text-primary;
+
+        &:ltr {
+            border-radius: 0 $radius-xl $radius-xl 0;
+            border-left: 1px solid $border-subtle;
+        }
+
+        &:rtl {
+            border-radius: $radius-xl 0 0 $radius-xl;
+            border-right: 1px solid $border-subtle;
+        }
+
+        &:checked {
+            border-left-color: rgba(6, 19, 22, 0.20);
+        }
+    }
+}
+
+/* Quick Sliders (Volume & Brightness) */
+.quick-slider {
+    padding: $space-2 0;
+
+    .slider-bin {
+        padding: $space-1;
+        border-radius: $radius-pill;
+    }
+
+    .icon-button {
+        color: $text-primary;
+        border-radius: $radius-pill;
+        padding: $space-2;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.14);
+            color: $accent-primary;
+        }
+    }
+}
+
+/* Quick Settings Header Actions (Screenshot, Settings, Lock, Power) */
+.quick-settings-action-button,
+.quick-settings .icon-button {
+    background-color: $card-bg;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-pill;
+    color: $text-primary;
+    padding: $space-2;
+    min-width: 36px;
+    min-height: 36px;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.20);
+        border-color: $border-glass;
+        color: $text-primary;
+    }
+
+    &:active {
+        background-color: $accent-primary;
+        color: $accent-on-primary;
+    }
+}
+
+/* Quick Toggle Submenu Panel */
+.quick-toggle-menu {
+    background-color: $glass-strong-bg;
+    border-radius: $radius-2xl;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    padding: $space-3;
+    margin: $space-3 $space-2 0;
+
+    .header {
+        spacing: $space-2;
+        padding-bottom: $space-2;
+
+        .title {
+            font-weight: 700;
+            font-size: 14px;
+            color: $text-primary;
+        }
+
+        .subtitle {
+            font-size: $type-caption-size;
+            color: $text-secondary;
+        }
+    }
+}
+
+.background-app-item {
+    border-radius: $radius-md;
+    padding: $space-2;
+    color: $text-primary;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .title {
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    .subtitle {
+        color: $text-muted;
+        font-size: $type-caption-size;
+    }
+}

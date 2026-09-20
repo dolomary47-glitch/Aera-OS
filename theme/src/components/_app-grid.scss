@@ -1,0 +1,114 @@
+// =============================================================================
+// Aera OS — Application Grid, App Folders & Page Indicators
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+.icon-grid {
+    spacing: $space-6;
+    -shell-grid-horizontal-item-size: 136px;
+    -shell-grid-vertical-item-size: 136px;
+
+    .overview-icon {
+        icon-size: 72px;
+    }
+}
+
+.app-well-app {
+    .overview-icon {
+        color: $text-primary;
+        border-radius: $radius-xl;
+        padding: $space-2;
+        transition-duration: $duration-fast;
+    }
+
+    &:hover .overview-icon,
+    &:focus .overview-icon,
+    &:selected .overview-icon {
+        background-color: rgba(255, 255, 255, 0.16);
+        box-shadow: $shadow-subtle;
+        color: $text-primary;
+    }
+
+    &:active .overview-icon,
+    &:checked .overview-icon {
+        background-color: rgba(3, 223, 248, 0.25);
+        box-shadow: 0 0 14px $accent-glow;
+        color: $text-primary;
+    }
+
+    &.running > .overview-icon {
+        box-shadow: inset 0 -3px 0 0 $accent-primary;
+    }
+}
+
+.app-well-app-running-dot {
+    border-radius: $radius-pill;
+    width: 6px;
+    height: 6px;
+    background-color: $accent-primary;
+    box-shadow: 0 0 8px $accent-glow;
+    margin-bottom: 2px;
+}
+
+/* Show Apps Button */
+.show-apps {
+    .show-apps-icon {
+        color: $text-primary;
+        transition-duration: $duration-fast;
+    }
+
+    &:hover .show-apps-icon,
+    &:focus .show-apps-icon {
+        color: $accent-primary;
+    }
+
+    &:checked .show-apps-icon {
+        color: $accent-primary;
+    }
+}
+
+/* App Folders */
+.app-folder-popup {
+    -arrow-border-radius: $radius-2xl;
+    -arrow-background-color: $glass-strong-bg;
+    -arrow-border-color: $border-glass;
+    -arrow-border-width: 1px;
+    -arrow-base: 24px;
+    -arrow-rise: 11px;
+    box-shadow: $shadow-floating;
+}
+
+.app-folder-popup-bin {
+    padding: $space-3;
+}
+
+.app-folder-icon {
+    padding: $space-1;
+    spacing-rows: $space-1;
+    spacing-columns: $space-1;
+}
+
+/* Page Indicator Pills */
+.page-indicator {
+    padding: $space-3 $space-4;
+
+    .page-indicator-icon {
+        width: 10px;
+        height: 10px;
+        border-radius: $radius-pill;
+        background-color: rgba(255, 255, 255, 0.25);
+        margin: 0 4px;
+        transition-duration: $duration-fast;
+    }
+
+    &:hover .page-indicator-icon {
+        background-color: rgba(255, 255, 255, 0.50);
+    }
+
+    &:checked .page-indicator-icon,
+    &:active .page-indicator-icon {
+        background-color: $accent-primary;
+        box-shadow: 0 0 10px $accent-glow;
+        width: 24px;
+    }
+}

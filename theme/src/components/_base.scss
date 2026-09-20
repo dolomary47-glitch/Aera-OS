@@ -1,0 +1,192 @@
+// =============================================================================
+// Aera OS — Base Components & Controls
+// =============================================================================
+
+stage {
+    font-family: $font-family;
+    font-size: $font-size-base;
+    color: $text-primary;
+}
+
+/* Generic Buttons */
+.button {
+    border-radius: $radius-md;
+    border: 1px solid $border-subtle;
+    padding: $space-2 $space-4;
+    font-weight: 600;
+    color: $text-primary;
+    background-color: $surface-inner;
+    box-shadow: $shadow-subtle;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        color: $text-primary;
+        background-color: rgba(255, 255, 255, 0.18);
+        border-color: $border-glass;
+        box-shadow: $shadow-subtle;
+    }
+
+    &:active {
+        color: $accent-on-primary;
+        background-color: $accent-primary;
+        border-color: $accent-primary;
+        box-shadow: 0 0 10px $accent-glow;
+    }
+
+    &:insensitive {
+        color: $text-disabled;
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    &.default {
+        background-color: $accent-primary;
+        color: $accent-on-primary;
+        border-color: $accent-primary;
+
+        &:hover, &:focus {
+            background-color: $accent-hover;
+            border-color: $accent-hover;
+        }
+
+        &:active {
+            background-color: $accent-pressed;
+            border-color: $accent-pressed;
+        }
+    }
+
+    &.flat {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        &:active {
+            background-color: rgba(255, 255, 255, 0.20);
+        }
+    }
+}
+
+/* Text Entries */
+StEntry {
+    border-radius: $radius-md;
+    padding: $space-2 $space-3;
+    border: 1px solid $border-glass;
+    color: $text-primary;
+    background-color: $entry-bg;
+    selection-background-color: $accent-primary;
+    selected-color: $accent-on-primary;
+    box-shadow: none;
+    transition-duration: $duration-fast;
+
+    &:focus {
+        background-color: $entry-focus-bg;
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 1px $accent-primary, 0 0 8px $accent-glow;
+    }
+
+    &:insensitive {
+        color: $text-disabled;
+        border-color: $border-subtle;
+    }
+
+    StIcon.capslock-warning {
+        icon-size: 16px;
+        warning-color: #f67d42;
+        padding: 0 $space-1;
+    }
+}
+
+/* Scrollbars */
+StScrollView.vfade { -st-vfade-offset: 68px; }
+StScrollView.hfade { -st-hfade-offset: 68px; }
+
+StScrollBar {
+    padding: 0;
+
+    StScrollView & {
+        min-width: 10px;
+        min-height: 10px;
+    }
+
+    StBin#trough {
+        border-radius: 0;
+        background-color: transparent;
+    }
+
+    StButton#vhandle, StButton#hhandle {
+        border-radius: $radius-pill;
+        background-color: rgba(255, 255, 255, 0.25);
+        margin: 2px;
+        transition-duration: $duration-fast;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.40);
+        }
+
+        &:active {
+            background-color: $accent-primary;
+        }
+    }
+}
+
+/* Sliders */
+.slider {
+    height: 18px;
+    -slider-height: 6px;
+    -slider-background-color: rgba(255, 255, 255, 0.15);
+    -slider-border-color: transparent;
+    -slider-active-background-color: $accent-primary;
+    -slider-active-border-color: transparent;
+    -slider-border-width: 0px;
+    -slider-handle-radius: 7px;
+}
+
+/* Checkboxes */
+.check-box {
+    StBoxLayout { spacing: $space-2; }
+    StBin {
+        width: 22px;
+        height: 22px;
+        background-image: url("assets/checkbox-off.svg");
+    }
+    &:focus StBin {
+        background-image: url("assets/checkbox-focused.svg");
+    }
+    &:checked StBin {
+        background-image: url("assets/checkbox.svg");
+    }
+    &:focus:checked StBin {
+        background-image: url("assets/checkbox-focused.svg");
+    }
+}
+
+/* Toggle switches */
+.toggle-switch {
+    width: 44px;
+    height: 22px;
+    background-size: contain;
+
+    &-intl, &-us {
+        background-image: url($toggle-off-asset);
+    }
+
+    &-intl:checked, &-us:checked {
+        background-image: url($toggle-on-asset);
+    }
+}
+
+/* Shell links */
+.shell-link {
+    color: $accent-primary;
+    font-weight: 500;
+
+    &:hover {
+        color: $accent-hover;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,152 @@
+// =============================================================================
+// Aera OS — Menus, Popovers, Boxpointer & Input Switcher
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+/* Popover Arrow & Boxpointer (Squircles with diffuse shadows) */
+.popup-menu-boxpointer,
+.candidate-popup-boxpointer {
+    -arrow-border-radius: $radius-2xl;
+    -arrow-background-color: $glass-bg;
+    -arrow-border-color: $border-glass;
+    -arrow-border-width: 1px;
+    -arrow-box-shadow: $shadow-floating;
+    -arrow-base: 24px;
+    -arrow-rise: 10px;
+}
+
+/* Popup Menu Base */
+.popup-menu {
+    color: $text-primary;
+    border-radius: $radius-2xl;
+    min-width: 220px;
+
+    &.panel-menu {
+        -boxpointer-gap: 6px;
+        margin-bottom: $space-4;
+    }
+
+    .popup-menu-content {
+        padding: $space-2;
+    }
+
+    .popup-menu-item {
+        padding: $space-2 $space-3;
+        spacing: $space-2;
+        border-radius: $radius-md;
+        color: $text-primary;
+        font-weight: 500;
+        transition-duration: $duration-fast;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.16);
+            color: $text-primary;
+        }
+
+        &:active {
+            background-color: $accent-primary;
+            color: $accent-on-primary;
+        }
+
+        &:checked, &.selected {
+            background-color: rgba(3, 223, 248, 0.18);
+            color: $text-primary;
+            font-weight: 700;
+        }
+
+        &:insensitive {
+            color: $text-disabled;
+        }
+
+        /* Sub-labels and shortcut keys */
+        StLabel {
+            color: inherit;
+        }
+
+        > StIcon {
+            icon-size: 16px;
+            color: inherit;
+        }
+    }
+
+    .popup-inactive-menu-item {
+        color: $text-muted;
+        font-weight: 600;
+
+        &:insensitive {
+            color: $text-disabled;
+        }
+    }
+
+    /* Submenus (Nested surfaces) */
+    .popup-sub-menu {
+        background-color: $card-bg;
+        border-radius: $radius-lg;
+        border: 1px solid $border-subtle;
+        margin: $space-1 0;
+        padding: $space-1;
+
+        .popup-menu-item {
+            border-radius: $radius-sm;
+            padding: $space-1 $space-2;
+        }
+    }
+}
+
+.popup-separator-menu-item {
+    height: 1px;
+    margin: $space-1 $space-3;
+    background-color: $border-subtle;
+}
+
+.popup-menu-ornament {
+    text-align: right;
+    width: 1.2em;
+    color: $accent-primary;
+    font-weight: 700;
+}
+
+.popup-menu-icon {
+    icon-size: 16px;
+}
+
+.background-menu {
+    -boxpointer-gap: 4px;
+    -arrow-rise: 0px;
+}
+
+/* IME Candidate Popup (Asian / Multilingual Input) */
+.candidate-popup-content {
+    padding: $space-2;
+    spacing: $space-1;
+}
+
+.candidate-box {
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+    color: $text-primary;
+
+    &:selected, &:hover {
+        background-color: $accent-primary;
+        color: $accent-on-primary;
+        font-weight: 700;
+    }
+}
+
+.candidate-page-button-box {
+    height: 2em;
+}
+
+.candidate-page-button {
+    padding: $space-1;
+    border-radius: $radius-sm;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.16);
+    }
+
+    &:active {
+        background-color: $accent-primary;
+        color: $accent-on-primary;
+    }
+}

@@ -1,0 +1,94 @@
+// =============================================================================
+// Aera OS — Search System
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+.search-entry {
+    width: 360px;
+    border-radius: $radius-pill;
+    color: $text-primary;
+    caret-color: $accent-primary;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    padding: $space-2 $space-4;
+    box-shadow: $shadow-floating;
+    font-size: 13pt;
+    transition-duration: $duration-fast;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.22);
+    }
+
+    &:focus {
+        border-color: $accent-primary;
+        box-shadow: 0 0 0 2px $accent-primary, 0 0 16px $accent-glow;
+    }
+
+    .search-entry-icon {
+        icon-size: 18px;
+        padding: 0 $space-1;
+        color: $accent-primary;
+    }
+}
+
+#searchResultsBin {
+    max-width: 960px;
+}
+
+#searchResultsContent {
+    padding: $space-3 $space-4;
+    spacing: $space-3;
+}
+
+.search-section {
+    spacing: $space-3;
+}
+
+.search-section-separator {
+    height: 1px;
+    background-color: $border-subtle;
+    margin: $space-2 0;
+}
+
+.list-search-result {
+    border-radius: $radius-lg;
+    padding: $space-2 $space-3;
+    spacing: $space-3;
+    color: $text-primary;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus, &:selected {
+        background-color: rgba(255, 255, 255, 0.16);
+        box-shadow: $shadow-subtle;
+    }
+
+    &:active, &:checked {
+        background-color: rgba(3, 223, 248, 0.20);
+    }
+
+    .list-search-result-title {
+        font-weight: 700;
+        font-size: $type-label-size;
+        color: $text-primary;
+    }
+
+    .list-search-result-description {
+        color: $text-secondary;
+        font-size: $type-caption-size;
+    }
+}
+
+.search-provider-icon {
+    padding: $space-3;
+    border-radius: $radius-md;
+
+    &:hover, &:focus, &:selected {
+        background-color: rgba(255, 255, 255, 0.14);
+    }
+}
+
+.search-statustext {
+    font-size: 2em;
+    font-weight: 700;
+    color: $text-secondary;
+}

@@ -1,0 +1,48 @@
+// =============================================================================
+// Aera OS — Theme Tokens (Shared Base)
+// =============================================================================
+
+$accent-primary:    #03DFF8;
+$accent-on-primary: #061316;
+$accent-hover:      #33E8FA;
+$accent-pressed:    #02B8D0;
+$accent-muted:      rgba(3, 223, 248, 0.20);
+$accent-glow:       rgba(3, 223, 248, 0.35);
+
+$font-family:       Inter, "SF Pro Display", "Cantarell", "Ubuntu", sans-serif;
+$font-size-base:    11pt;
+
+$type-display-size: 80px;
+$type-display-weight: 700;
+
+$type-metric-size:  20px;
+$type-metric-weight: 600;
+
+$type-label-size:   13px;
+$type-label-weight: 600;
+
+$type-caption-size: 11px;
+$type-caption-weight: 500;
+
+$space-1:  4px;
+$space-2:  8px;
+$space-3:  12px;
+$space-4:  16px;
+$space-5:  20px;
+$space-6:  24px;
+$space-8:  32px;
+$space-10: 40px;
+
+$radius-sm:   8px;
+$radius-md:   12px;
+$radius-lg:   16px;
+$radius-xl:   20px;
+$radius-2xl:  24px;
+$radius-pill: 999px;
+
+$shadow-floating: 0 14px 36px rgba(0, 0, 0, 0.22);
+$shadow-subtle:   0 4px 14px rgba(0, 0, 0, 0.08);
+
+$duration-fast:   150ms;
+$duration-normal: 250ms;
+$duration-smooth: 350ms;

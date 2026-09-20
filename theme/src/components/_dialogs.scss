@@ -1,0 +1,272 @@
+// =============================================================================
+// Aera OS — Dialogs, Authentication & Lock Screen
+// Borrowed structure from Rounded-Rectangle reference, styled to Aera tokens
+// =============================================================================
+
+/* Modal Dialogs Base */
+.modal-dialog {
+    border-radius: $radius-2xl;
+    color: $text-primary;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    padding: $space-4;
+
+    .modal-dialog-linked-button {
+        height: 44px;
+        padding: 0 $space-4;
+        border-radius: $radius-lg;
+        font-weight: 700;
+        margin: $space-1;
+        background-color: $card-bg;
+        border: 1px solid $border-subtle;
+        color: $text-primary;
+        transition-duration: $duration-fast;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.18);
+            border-color: $border-glass;
+        }
+
+        &:active {
+            background-color: $accent-primary;
+            color: $accent-on-primary;
+        }
+
+        &:last-child {
+            background-color: $accent-primary;
+            color: $accent-on-primary;
+            border-color: $accent-primary;
+
+            &:hover {
+                background-color: $accent-hover;
+                border-color: $accent-hover;
+            }
+
+            &:active {
+                background-color: $accent-pressed;
+                border-color: $accent-pressed;
+            }
+        }
+    }
+
+    /* Run Dialog (Alt+F2) */
+    .run-dialog-entry {
+        width: 22em;
+        background-color: $entry-bg;
+        border: 1px solid $border-glass;
+        border-radius: $radius-lg;
+        color: $text-primary;
+        padding: $space-2 $space-3;
+        margin-bottom: $space-2;
+    }
+
+    .run-dialog-error-box {
+        padding-top: $space-4;
+        spacing: $space-2;
+    }
+
+    .run-dialog-label {
+        font-size: 13pt;
+        font-weight: 700;
+        color: $text-primary;
+        padding-bottom: $space-1;
+    }
+}
+
+/* Password, PIN & Polkit Authentication Dialogs */
+.prompt-dialog {
+    width: 500px;
+    border-radius: $radius-2xl;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+
+    .prompt-dialog-main-layout {
+        spacing: $space-6;
+        padding: $space-3;
+    }
+
+    .prompt-dialog-message-layout {
+        spacing: $space-4;
+    }
+
+    .prompt-dialog-headline {
+        font-weight: 700;
+        font-size: 14pt;
+        color: $text-primary;
+    }
+
+    .prompt-dialog-description {
+        color: $text-secondary;
+        font-size: $type-label-size;
+    }
+
+    .prompt-dialog-password-box {
+        spacing: $space-3;
+        padding-bottom: $space-3;
+    }
+
+    .prompt-dialog-error-label {
+        color: #ff6b6b;
+        font-size: $type-caption-size;
+        padding-bottom: $space-2;
+    }
+
+    .prompt-dialog-info-label {
+        color: $text-muted;
+        font-size: $type-caption-size;
+        padding-bottom: $space-2;
+    }
+}
+
+.polkit-dialog-user-layout {
+    padding-left: $space-2;
+    spacing: $space-2;
+}
+
+.polkit-dialog-user-root-label {
+    color: #f67d42;
+    font-weight: 700;
+}
+
+.polkit-dialog-user-icon {
+    border-radius: $radius-md;
+    width: 48px;
+    height: 48px;
+}
+
+/* End Session Dialog (Power Off / Restart / Log Out) */
+.end-session-dialog {
+    spacing: $space-8;
+    border-radius: $radius-2xl;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+
+    .end-session-dialog-description {
+        width: 28em;
+        color: $text-secondary;
+        padding-bottom: $space-2;
+    }
+
+    .end-session-dialog-warning {
+        width: 28em;
+        color: #ff6b6b;
+        font-weight: 600;
+        padding-top: $space-1;
+    }
+
+    .end-session-dialog-logout-icon,
+    .end-session-dialog-shutdown-icon {
+        border-radius: $radius-lg;
+        width: 48px;
+        height: 48px;
+        color: $text-primary;
+    }
+
+    .modal-dialog-linked-button:last-child {
+        background-color: #ff4757;
+        color: #FFFFFF;
+        border-color: #ff4757;
+
+        &:hover {
+            background-color: #ff6b81;
+            border-color: #ff6b81;
+        }
+
+        &:active {
+            background-color: #ee5253;
+            border-color: #ee5253;
+        }
+    }
+}
+
+/* Shell Mount Operation Dialogs */
+.show-processes-dialog,
+.mount-question-dialog {
+    spacing: $space-6;
+
+    .show-processes-dialog-subject,
+    .mount-question-dialog-subject {
+        font-size: 14pt;
+        font-weight: 700;
+        color: $text-primary;
+    }
+
+    .show-processes-dialog-description,
+    .mount-question-dialog-description {
+        color: $text-secondary;
+    }
+}
+
+/* Network & VPN Agent Dialogs */
+.nm-dialog {
+    max-height: 500px;
+    min-height: 420px;
+    min-width: 460px;
+    border-radius: $radius-2xl;
+
+    .nm-dialog-header {
+        font-weight: 700;
+        color: $text-primary;
+    }
+
+    .nm-dialog-item {
+        border-radius: $radius-md;
+        padding: $space-3;
+        spacing: $space-4;
+        color: $text-primary;
+        transition-duration: $duration-fast;
+
+        &:selected, &:hover {
+            background-color: rgba(3, 223, 248, 0.20);
+            color: $text-primary;
+        }
+    }
+}
+
+/* Lock Screen & Screen Shield */
+.screen-shield-clock {
+    color: #FFFFFF;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.50);
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 2em;
+
+    .screen-shield-clock-time {
+        font-size: $type-display-size;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.40), 0 2px 10px rgba(0, 0, 0, 0.50);
+    }
+
+    .screen-shield-clock-date {
+        font-size: 24pt;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+    }
+}
+
+.screen-shield-arrows Gjs_Arrow {
+    color: #FFFFFF;
+    width: 80px;
+    height: 48px;
+    -arrow-thickness: 12px;
+    -arrow-shadow: 0 2px 4px rgba(0, 0, 0, 0.40);
+}
+
+.unlock-dialog {
+    color: $text-primary;
+
+    .user-widget-label {
+        font-size: 16pt;
+        font-weight: 700;
+        color: $text-primary;
+    }
+}
+
+.login-dialog-auth-list-label {
+    font-weight: 600;
+    color: $text-secondary;
+}

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Aera
+Comment=Aera OS Official GNOME Shell Theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GnomeShellTheme=Aera

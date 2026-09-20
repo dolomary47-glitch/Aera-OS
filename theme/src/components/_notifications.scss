@@ -1,0 +1,131 @@
+// =============================================================================
+// Aera OS — Notifications & OSD
+// Clear typography hierarchy, frosted cards, high readability
+// =============================================================================
+
+.notification-banner {
+    width: 34em;
+    margin: $space-2;
+    border-radius: $radius-2xl;
+    color: $text-primary;
+    background-color: $glass-strong-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    padding: $space-3;
+    transition-duration: $duration-normal;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.20);
+    }
+
+    .notification-icon {
+        padding: $space-2;
+    }
+
+    .notification-content {
+        padding: $space-1 $space-2;
+        spacing: $space-1;
+    }
+
+    .notification-actions {
+        background-color: transparent;
+        spacing: $space-2;
+        padding-top: $space-2;
+    }
+
+    .notification-button {
+        border-radius: $radius-md;
+        border: 1px solid $border-subtle;
+        padding: $space-1 $space-3;
+        color: $text-primary;
+        background-color: $surface-inner;
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, 0.22);
+            border-color: $border-glass;
+        }
+
+        &:first-child {
+            background-color: $accent-primary;
+            color: $accent-on-primary;
+            border-color: $accent-primary;
+        }
+    }
+}
+
+.message {
+    background-color: $card-bg;
+    margin: $space-2 $space-2;
+    border-radius: $radius-xl;
+    border: 1px solid $border-subtle;
+    box-shadow: $shadow-subtle;
+    padding: $space-3;
+    transition-duration: $duration-fast;
+
+    &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.16);
+        border-color: $border-glass;
+    }
+
+    .message-header {
+        spacing: $space-2;
+
+        .message-title {
+            color: $text-primary;
+            font-weight: 700;
+            font-size: $type-label-size;
+        }
+
+        .message-time {
+            color: $text-muted;
+            font-size: $type-caption-size;
+        }
+
+        .message-close-button,
+        .message-expand-button {
+            border-radius: $radius-pill;
+            padding: 4px;
+            color: $text-secondary;
+            background-color: rgba(255, 255, 255, 0.10);
+
+            &:hover, &:focus {
+                background-color: rgba(255, 255, 255, 0.22);
+                color: $text-primary;
+            }
+        }
+    }
+
+    .message-content {
+        color: $text-secondary;
+        font-size: $type-caption-size;
+        padding: $space-1 0;
+        line-height: 1.4;
+    }
+
+    .message-icon-bin {
+        padding: $space-1;
+    }
+}
+
+/* OSD Windows (Volume, Brightness) */
+.osd-window {
+    text-align: center;
+    font-weight: 700;
+    spacing: $space-3;
+    margin: $space-8;
+    min-width: 90px;
+    min-height: 90px;
+    border-radius: $radius-2xl;
+    background-color: $osd-bg;
+    border: 1px solid $border-glass;
+    box-shadow: $shadow-floating;
+    color: $text-primary;
+    padding: $space-4;
+
+    .level {
+        height: 6px;
+        border-radius: $radius-pill;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: $accent-primary;
+    }
+}
