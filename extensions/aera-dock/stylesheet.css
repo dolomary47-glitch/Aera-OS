@@ -3,9 +3,8 @@
  * Refined frosted glass floating dock matching visual reference
  * ============================================================================= */
 
-/* ── Outer Dock Container (Anchored at screen bottom center) ────────────────── */
+/* ── Outer Dock Container (Positioned at bottom center) ─────────────────────── */
 .aera-dock-container {
-    margin-bottom: 10px;
     spacing: 6px;
 }
 

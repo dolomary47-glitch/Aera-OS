@@ -4,6 +4,7 @@
  */
 
 import Clutter from 'gi://Clutter';
+import GLib from 'gi://GLib';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
@@ -14,17 +15,17 @@ import { WorkspaceManager } from './workspaceManager.js';
 export class AeraDock {
     constructor(extensionPath) {
         this._extensionPath = extensionPath;
+        this._repositioning = false;
 
-        // Root fullscreen wrapper actor with BinLayout
-        this.actor = new Clutter.Actor({
-            name: 'aeraDockWrapper',
-            layout_manager: new Clutter.BinLayout(),
-            reactive: false,
-            x_expand: true,
-            y_expand: true,
+        // ── 1. Floating Dock Box ─────────────────────────────────────────────
+        this.actor = new St.BoxLayout({
+            name: 'aeraDock',
+            style_class: 'aera-dock-container',
+            reactive: true,
+            track_hover: true,
         });
 
-        // ── 1. Tooltip Manager ───────────────────────────────────────────────
+        // ── 2. Tooltip Manager ───────────────────────────────────────────────
         this._tooltip = new St.Label({
             style_class: 'aera-dock-tooltip',
             opacity: 0,
@@ -35,17 +36,6 @@ export class AeraDock {
         const showTooltip = (targetActor, text) => this._showTooltip(targetActor, text);
         const hideTooltip = () => this._hideTooltip();
 
-        // ── 2. Centered Bottom Dock Box ──────────────────────────────────────
-        this._dockBox = new St.BoxLayout({
-            name: 'aeraDock',
-            style_class: 'aera-dock-container',
-            reactive: true,
-            track_hover: true,
-            x_align: Clutter.ActorAlign.CENTER,
-            y_align: Clutter.ActorAlign.END,
-        });
-        this.actor.add_child(this._dockBox);
-
         // ── 3. Left Segment: Aera Launcher ───────────────────────────────────
         this._leftSegment = new St.BoxLayout({
             style_class: 'aera-dock-segment aera-dock-launcher-segment',
@@ -53,7 +43,7 @@ export class AeraDock {
         });
         this._launcher = new AeraLauncher(this._extensionPath, showTooltip, hideTooltip);
         this._leftSegment.add_child(this._launcher.actor);
-        this._dockBox.add_child(this._leftSegment);
+        this.actor.add_child(this._leftSegment);
 
         // ── 4. Right Segment: Main Apps & Multitasking Bar ───────────────────
         this._rightSegment = new St.BoxLayout({
@@ -69,29 +59,52 @@ export class AeraDock {
         this._workspaceManager = new WorkspaceManager(this._extensionPath, showTooltip, hideTooltip);
         this._rightSegment.add_child(this._workspaceManager.actor);
 
-        this._dockBox.add_child(this._rightSegment);
+        this.actor.add_child(this._rightSegment);
 
-        // ── 5. Position & Geometry ───────────────────────────────────────────
+        // ── 5. Dynamic Repositioning ─────────────────────────────────────────
         this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
             this.reposition();
         });
 
-        this.reposition();
+        this._allocId = this.actor.connect('notify::allocation', () => {
+            this._queueReposition();
+        });
+
+        this._queueReposition();
+    }
+
+    _queueReposition() {
+        if (this._queuedRepositionId) return;
+        this._queuedRepositionId = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+            this._queuedRepositionId = null;
+            this.reposition();
+            return GLib.SOURCE_REMOVE;
+        });
     }
 
     reposition() {
-        const monitor = Main.layoutManager.primaryMonitor;
-        if (!monitor) return;
+        if (this._repositioning) return;
+        this._repositioning = true;
 
-        // Cover the monitor bounds so BinLayout aligns child to bottom-center
-        this.actor.set_position(
-            monitor.x,
-            monitor.y
-        );
-        this.actor.set_size(
-            monitor.width,
-            monitor.height
-        );
+        try {
+            const monitor = Main.layoutManager.primaryMonitor;
+            if (!monitor || !this.actor) return;
+
+            this.actor.ensure_style();
+            const [, natWidth] = this.actor.get_preferred_width(-1);
+            const [, natHeight] = this.actor.get_preferred_height(-1);
+
+            const width = natWidth > 0 ? natWidth : 350;
+            const height = natHeight > 0 ? natHeight : 54;
+
+            const x = Math.round(monitor.x + (monitor.width - width) / 2);
+            const y = Math.round(monitor.y + monitor.height - height - 12);
+
+            this.actor.set_position(x, y);
+            this.actor.set_size(width, height);
+        } finally {
+            this._repositioning = false;
+        }
     }
 
     _showTooltip(targetActor, text) {
@@ -133,9 +146,19 @@ export class AeraDock {
     }
 
     destroy() {
+        if (this._queuedRepositionId) {
+            GLib.source_remove(this._queuedRepositionId);
+            this._queuedRepositionId = null;
+        }
+
         if (this._monitorsChangedId) {
             Main.layoutManager.disconnect(this._monitorsChangedId);
             this._monitorsChangedId = null;
+        }
+
+        if (this._allocId) {
+            this.actor.disconnect(this._allocId);
+            this._allocId = null;
         }
 
         if (this._tooltip) {
