@@ -36,7 +36,7 @@ export class AeraDock {
         const showTooltip = (targetActor, text) => this._showTooltip(targetActor, text);
         const hideTooltip = () => this._hideTooltip();
 
-        // ── 3. Left Segment: Aera Launcher ───────────────────────────────────
+        // ── 3. Left Segment: Aera Launcher (Rounded Left, Straight Right) ─────
         this._leftSegment = new St.BoxLayout({
             style_class: 'aera-dock-segment aera-dock-launcher-segment',
             y_align: Clutter.ActorAlign.CENTER,
@@ -45,7 +45,7 @@ export class AeraDock {
         this._leftSegment.add_child(this._launcher.actor);
         this.actor.add_child(this._leftSegment);
 
-        // ── 4. Right Segment: Main Apps & Multitasking Bar ───────────────────
+        // ── 4. Right Segment: Apps & Multitasking (Straight Left, Rounded Right)
         this._rightSegment = new St.BoxLayout({
             style_class: 'aera-dock-segment aera-dock-bar',
             y_align: Clutter.ActorAlign.CENTER,
@@ -61,7 +61,18 @@ export class AeraDock {
 
         this.actor.add_child(this._rightSegment);
 
-        // ── 5. Dynamic Repositioning ─────────────────────────────────────────
+        // ── 5. Suppress Default Overview Dash (Avoid Double Dock) ─────────────
+        if (Main.overview.dash) {
+            this._origDashVisible = Main.overview.dash.visible;
+            Main.overview.dash.hide();
+        }
+
+        this._overviewShowingDashId = Main.overview.connect('showing', () => {
+            if (Main.overview.dash)
+                Main.overview.dash.hide();
+        });
+
+        // ── 6. Dynamic Repositioning ─────────────────────────────────────────
         this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
             this.reposition();
         });
@@ -97,8 +108,9 @@ export class AeraDock {
             const width = natWidth > 0 ? natWidth : 350;
             const height = natHeight > 0 ? natHeight : 54;
 
+            // Centered horizontally, 4px from the bottom edge
             const x = Math.round(monitor.x + (monitor.width - width) / 2);
-            const y = Math.round(monitor.y + monitor.height - height - 12);
+            const y = Math.round(monitor.y + monitor.height - height - 4);
 
             this.actor.set_position(x, y);
             this.actor.set_size(width, height);
@@ -159,6 +171,16 @@ export class AeraDock {
         if (this._allocId) {
             this.actor.disconnect(this._allocId);
             this._allocId = null;
+        }
+
+        if (this._overviewShowingDashId) {
+            Main.overview.disconnect(this._overviewShowingDashId);
+            this._overviewShowingDashId = null;
+        }
+
+        // Restore overview dash visibility
+        if (Main.overview.dash) {
+            Main.overview.dash.show();
         }
 
         if (this._tooltip) {

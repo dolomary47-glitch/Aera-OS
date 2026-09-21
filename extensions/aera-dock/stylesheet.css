@@ -1,27 +1,30 @@
 /* =============================================================================
  * Aera OS Dock — Extension Stylesheet
- * Refined frosted glass floating dock matching visual reference
+ * Refined split-pill frosted glass floating dock matching visual reference
  * ============================================================================= */
 
 /* ── Outer Dock Container (Positioned at bottom center) ─────────────────────── */
 .aera-dock-container {
-    spacing: 6px;
+    spacing: 3px;
 }
 
 /* ── Segment Card Base (Frosted Glass Surface) ──────────────────────────────── */
 .aera-dock-segment {
-    background-color: rgba(30, 34, 46, 0.65);
+    background-color: rgba(28, 32, 44, 0.60);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     padding: 3px 5px;
 }
 
-/* ── Aera Launcher Button (Left Segment) ────────────────────────────────────── */
+/* ── Left Segment: Aera Launcher (Left side rounded, right side straight) ───── */
+.aera-dock-launcher-segment {
+    border-radius: 12px 0 0 12px;
+}
+
 .aera-dock-launcher-button {
     width: 46px;
     height: 46px;
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     border: 1px solid transparent;
     transition-duration: 120ms;
 }
@@ -41,8 +44,9 @@
     icon-size: 30px;
 }
 
-/* ── Main Apps & Workspaces Bar (Right Segment) ─────────────────────────────── */
+/* ── Right Segment: Apps & Multitasking (Left side straight, right side rounded) */
 .aera-dock-bar {
+    border-radius: 0 12px 12px 0;
     spacing: 3px;
 }
 
@@ -97,7 +101,7 @@
 .aera-dock-overview-button {
     width: 46px;
     height: 46px;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     border: 1px solid transparent;
     transition-duration: 120ms;
 }
