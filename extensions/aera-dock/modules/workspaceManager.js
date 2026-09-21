@@ -23,7 +23,7 @@ export class WorkspaceManager {
 
         // 1. Workspace buttons container
         this._itemsBox = new St.BoxLayout({
-            spacing: 3,
+            style_class: 'aera-dock-workspace-items-box',
             y_align: Clutter.ActorAlign.CENTER,
         });
         this.actor.add_child(this._itemsBox);

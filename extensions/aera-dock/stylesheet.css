@@ -105,6 +105,10 @@
     spacing: 4px;
 }
 
+.aera-dock-workspace-items-box {
+    spacing: 3px;
+}
+
 .aera-dock-workspace-item {
     min-width: 18px;
     height: 28px;
