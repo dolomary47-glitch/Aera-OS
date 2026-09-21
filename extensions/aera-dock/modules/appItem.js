@@ -34,11 +34,11 @@ export class AppItem {
         this.actor.set_child(this._contentBox);
 
         // App Icon
-        this._icon = this.app.create_icon_texture(32);
+        this._icon = this.app.create_icon_texture(34);
         if (!this._icon) {
             this._icon = new St.Icon({
                 icon_name: 'application-x-executable',
-                icon_size: 32,
+                icon_size: 34,
             });
         }
         this._icon.x_align = Clutter.ActorAlign.CENTER;

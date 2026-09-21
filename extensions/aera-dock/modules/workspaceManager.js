@@ -1,34 +1,25 @@
 /**
- * Aera OS Dock — Workspace Manager Module
- * Manages dynamic workspace switcher buttons and overview trigger.
+ * Aera OS Dock — Workspace / Multitasking Module
+ * Provides the Multitasking / Overview view trigger button matching the reference image.
  */
 
 import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
-import { WorkspaceItem } from './workspaceItem.js';
 
 export class WorkspaceManager {
     constructor(extensionPath, showTooltip, hideTooltip) {
         this._extensionPath = extensionPath;
         this._showTooltip = showTooltip;
         this._hideTooltip = hideTooltip;
-        this._wsItems = [];
 
         this.actor = new St.BoxLayout({
             style_class: 'aera-dock-workspaces-box',
             y_align: Clutter.ActorAlign.CENTER,
         });
 
-        // 1. Workspace buttons container
-        this._itemsBox = new St.BoxLayout({
-            style_class: 'aera-dock-workspace-items-box',
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        this.actor.add_child(this._itemsBox);
-
-        // 2. Multitasking / Overview toggle button (far right icon from reference)
+        // Multitasking / Overview toggle button (far right icon from reference)
         this._overviewButton = new St.Button({
             style_class: 'aera-dock-overview-button',
             reactive: true,
@@ -42,7 +33,7 @@ export class WorkspaceManager {
         const iconGIcon = new Gio.FileIcon({ file: iconFile });
         this._overviewIcon = new St.Icon({
             gicon: iconGIcon,
-            icon_size: 24,
+            icon_size: 28,
         });
         this._overviewButton.set_child(this._overviewIcon);
 
@@ -60,65 +51,18 @@ export class WorkspaceManager {
                 this._hideTooltip();
         });
 
+        // Update checked state when overview is showing
+        this._overviewShowingId = Main.overview.connect('showing', () => {
+            this._overviewButton.add_style_pseudo_class('checked');
+        });
+        this._overviewHidingId = Main.overview.connect('hiding', () => {
+            this._overviewButton.remove_style_pseudo_class('checked');
+        });
+
         this.actor.add_child(this._overviewButton);
-
-        // 3. Connect workspace manager signals
-        const wsMgr = global.workspace_manager;
-        this._activeWsId = wsMgr.connect('active-workspace-changed', () => {
-            this._updateActiveStates();
-        });
-
-        this._wsAddedId = wsMgr.connect('workspace-added', () => {
-            this.refresh();
-        });
-
-        this._wsRemovedId = wsMgr.connect('workspace-removed', () => {
-            this.refresh();
-        });
-
-        this.refresh();
-    }
-
-    refresh() {
-        // Clear existing items
-        for (const item of this._wsItems) {
-            item.destroy();
-        }
-        this._wsItems = [];
-        this._itemsBox.remove_all_children();
-
-        const wsMgr = global.workspace_manager;
-        const nWorkspaces = wsMgr.get_n_workspaces();
-
-        for (let i = 0; i < nWorkspaces; i++) {
-            const ws = wsMgr.get_workspace_by_index(i);
-            const item = new WorkspaceItem(i, ws, this._showTooltip, this._hideTooltip);
-            this._wsItems.push(item);
-            this._itemsBox.add_child(item.actor);
-        }
-    }
-
-    _updateActiveStates() {
-        for (const item of this._wsItems) {
-            item.updateActiveState();
-        }
     }
 
     destroy() {
-        const wsMgr = global.workspace_manager;
-        if (this._activeWsId) {
-            wsMgr.disconnect(this._activeWsId);
-            this._activeWsId = null;
-        }
-        if (this._wsAddedId) {
-            wsMgr.disconnect(this._wsAddedId);
-            this._wsAddedId = null;
-        }
-        if (this._wsRemovedId) {
-            wsMgr.disconnect(this._wsRemovedId);
-            this._wsRemovedId = null;
-        }
-
         if (this._overviewClickId) {
             this._overviewButton.disconnect(this._overviewClickId);
             this._overviewClickId = null;
@@ -131,11 +75,14 @@ export class WorkspaceManager {
             this._overviewButton.disconnect(this._overviewLeaveId);
             this._overviewLeaveId = null;
         }
-
-        for (const item of this._wsItems) {
-            item.destroy();
+        if (this._overviewShowingId) {
+            Main.overview.disconnect(this._overviewShowingId);
+            this._overviewShowingId = null;
         }
-        this._wsItems = [];
+        if (this._overviewHidingId) {
+            Main.overview.disconnect(this._overviewHidingId);
+            this._overviewHidingId = null;
+        }
 
         this.actor.destroy();
     }

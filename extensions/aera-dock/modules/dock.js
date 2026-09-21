@@ -15,14 +15,13 @@ export class AeraDock {
     constructor(extensionPath) {
         this._extensionPath = extensionPath;
 
-        // Outer Root Actor (added as chrome)
-        this.actor = new St.BoxLayout({
-            name: 'aeraDock',
-            style_class: 'aera-dock-container',
-            reactive: true,
-            track_hover: true,
-            x_align: Clutter.ActorAlign.CENTER,
-            y_align: Clutter.ActorAlign.END,
+        // Root fullscreen wrapper actor with BinLayout
+        this.actor = new Clutter.Actor({
+            name: 'aeraDockWrapper',
+            layout_manager: new Clutter.BinLayout(),
+            reactive: false,
+            x_expand: true,
+            y_expand: true,
         });
 
         // ── 1. Tooltip Manager ───────────────────────────────────────────────
@@ -36,16 +35,27 @@ export class AeraDock {
         const showTooltip = (targetActor, text) => this._showTooltip(targetActor, text);
         const hideTooltip = () => this._hideTooltip();
 
-        // ── 2. Left Segment: Aera Launcher ───────────────────────────────────
+        // ── 2. Centered Bottom Dock Box ──────────────────────────────────────
+        this._dockBox = new St.BoxLayout({
+            name: 'aeraDock',
+            style_class: 'aera-dock-container',
+            reactive: true,
+            track_hover: true,
+            x_align: Clutter.ActorAlign.CENTER,
+            y_align: Clutter.ActorAlign.END,
+        });
+        this.actor.add_child(this._dockBox);
+
+        // ── 3. Left Segment: Aera Launcher ───────────────────────────────────
         this._leftSegment = new St.BoxLayout({
-            style_class: 'aera-dock-segment',
+            style_class: 'aera-dock-segment aera-dock-launcher-segment',
             y_align: Clutter.ActorAlign.CENTER,
         });
         this._launcher = new AeraLauncher(this._extensionPath, showTooltip, hideTooltip);
         this._leftSegment.add_child(this._launcher.actor);
-        this.actor.add_child(this._leftSegment);
+        this._dockBox.add_child(this._leftSegment);
 
-        // ── 3. Right Segment: Main Apps & Workspaces Bar ─────────────────────
+        // ── 4. Right Segment: Main Apps & Multitasking Bar ───────────────────
         this._rightSegment = new St.BoxLayout({
             style_class: 'aera-dock-segment aera-dock-bar',
             y_align: Clutter.ActorAlign.CENTER,
@@ -55,20 +65,13 @@ export class AeraDock {
         this._appManager = new AppManager(showTooltip, hideTooltip);
         this._rightSegment.add_child(this._appManager.actor);
 
-        // Separator Line
-        this._separator = new St.Widget({
-            style_class: 'aera-dock-separator',
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-        this._rightSegment.add_child(this._separator);
-
-        // Workspaces Box
+        // Workspaces / Overview Box
         this._workspaceManager = new WorkspaceManager(this._extensionPath, showTooltip, hideTooltip);
         this._rightSegment.add_child(this._workspaceManager.actor);
 
-        this.actor.add_child(this._rightSegment);
+        this._dockBox.add_child(this._rightSegment);
 
-        // ── 4. Position & Geometry ───────────────────────────────────────────
+        // ── 5. Position & Geometry ───────────────────────────────────────────
         this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
             this.reposition();
         });
@@ -80,7 +83,7 @@ export class AeraDock {
         const monitor = Main.layoutManager.primaryMonitor;
         if (!monitor) return;
 
-        // Position at bottom center of the primary monitor
+        // Cover the monitor bounds so BinLayout aligns child to bottom-center
         this.actor.set_position(
             monitor.x,
             monitor.y
