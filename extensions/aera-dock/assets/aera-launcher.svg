@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#E2E8F0" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#94A3B8" stop-opacity="0.75" />
+    </linearGradient>
+    <linearGradient id="cubeRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94A3B8" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.7" />
+    </linearGradient>
+  </defs>
+  <!-- Isometric 3D Cube -->
+  <g transform="translate(24, 24)">
+    <!-- Top Face -->
+    <polygon points="0,-16 14,-8 0,0 -14,-8" fill="url(#cubeTop)" stroke="rgba(255,255,255,0.6)" stroke-width="0.75" />
+    <!-- Left Face -->
+    <polygon points="-14,-8 0,0 0,16 -14,8" fill="url(#cubeLeft)" stroke="rgba(255,255,255,0.4)" stroke-width="0.75" />
+    <!-- Right Face -->
+    <polygon points="0,0 14,-8 14,8 0,16" fill="url(#cubeRight)" stroke="rgba(255,255,255,0.3)" stroke-width="0.75" />
+  </g>
+</svg>

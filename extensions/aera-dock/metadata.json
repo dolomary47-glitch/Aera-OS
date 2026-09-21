@@ -1,0 +1,12 @@
+{
+  "name": "Aera Dock",
+  "description": "The official desktop application dock and workspace switcher for Aera OS.",
+  "uuid": "aera-dock@aeraos",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48"
+  ],
+  "version": 1
+}

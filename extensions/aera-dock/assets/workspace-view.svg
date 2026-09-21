@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#94A3B8" stop-opacity="0.75" />
+    </linearGradient>
+    <linearGradient id="sideCardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94A3B8" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.4" />
+    </linearGradient>
+  </defs>
+  <!-- Left Peek Card -->
+  <rect x="6" y="14" width="10" height="20" rx="3" fill="url(#sideCardGrad)" />
+  <!-- Right Peek Card -->
+  <rect x="32" y="14" width="10" height="20" rx="3" fill="url(#sideCardGrad)" />
+  <!-- Center Main Window Card -->
+  <rect x="12" y="10" width="24" height="28" rx="4" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.7)" stroke-width="0.75" />
+</svg>

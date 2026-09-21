@@ -1,0 +1,165 @@
+/* =============================================================================
+ * Aera OS Dock — Extension Stylesheet
+ * Governed by Aera OS Design Tokens V1
+ * ============================================================================= */
+
+/* ── Outer Dock Container (Centers both segments at screen bottom) ──────────── */
+.aera-dock-container {
+    padding-bottom: 8px;
+    spacing: 8px;
+}
+
+/* ── Segment Card Base (Glass Surface) ──────────────────────────────────────── */
+.aera-dock-segment {
+    background-color: rgba(22, 26, 36, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    padding: 4px 6px;
+    transition-duration: 200ms;
+}
+
+/* ── Aera Launcher Button (Left Segment) ────────────────────────────────────── */
+.aera-dock-launcher-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition-duration: 150ms;
+}
+
+.aera-dock-launcher-button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.aera-dock-launcher-button:active,
+.aera-dock-launcher-button:checked {
+    background-color: rgba(3, 223, 248, 0.22);
+    border-color: #03DFF8;
+    box-shadow: 0 0 10px rgba(3, 223, 248, 0.35);
+}
+
+.aera-dock-launcher-icon {
+    icon-size: 28px;
+}
+
+/* ── Main Apps & Workspaces Bar (Right Segment) ─────────────────────────────── */
+.aera-dock-bar {
+    spacing: 4px;
+}
+
+.aera-dock-apps-box {
+    spacing: 3px;
+}
+
+/* ── Individual App Item ────────────────────────────────────────────────────── */
+.aera-dock-app-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition-duration: 120ms;
+}
+
+.aera-dock-app-button:hover,
+.aera-dock-app-button:focus {
+    background-color: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.aera-dock-app-button:active {
+    background-color: rgba(255, 255, 255, 0.20);
+}
+
+.aera-dock-app-icon {
+    icon-size: 32px;
+}
+
+/* ── Running Indicator Dot ─────────────────────────────────────────────────── */
+.aera-dock-running-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background-color: #FFFFFF;
+    margin-bottom: 2px;
+    transition-duration: 150ms;
+}
+
+.aera-dock-app-button.focused .aera-dock-running-dot {
+    background-color: #03DFF8;
+    box-shadow: 0 0 6px rgba(3, 223, 248, 0.6);
+    width: 8px;
+}
+
+/* ── Vertical Separator Line ───────────────────────────────────────────────── */
+.aera-dock-separator {
+    width: 1px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.20);
+    margin: 0 4px;
+}
+
+/* ── Workspace Switcher Controls ───────────────────────────────────────────── */
+.aera-dock-workspaces-box {
+    spacing: 4px;
+}
+
+.aera-dock-workspace-item {
+    min-width: 18px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0 6px;
+    transition-duration: 150ms;
+}
+
+.aera-dock-workspace-item:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+}
+
+.aera-dock-workspace-item.active {
+    background-color: #03DFF8;
+    border-color: #03DFF8;
+    color: #061316;
+    font-weight: 700;
+    box-shadow: 0 0 8px rgba(3, 223, 248, 0.45);
+}
+
+.aera-dock-overview-button {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition-duration: 120ms;
+}
+
+.aera-dock-overview-button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.aera-dock-overview-button:active,
+.aera-dock-overview-button:checked {
+    background-color: rgba(3, 223, 248, 0.22);
+    border-color: #03DFF8;
+}
+
+/* ── Tooltip Bubble ────────────────────────────────────────────────────────── */
+.aera-dock-tooltip {
+    background-color: rgba(18, 22, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+    text-align: center;
+}
