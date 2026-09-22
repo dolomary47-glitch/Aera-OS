@@ -11,7 +11,7 @@
 /* ── Card shell ─────────────────────────────────────────────────────────────── */
 .aera-system-root {
     font-family: Inter, 'SF Pro Display', Cantarell, Ubuntu, sans-serif; /* typography.family.system */
-    spacing: 12px; /* space.3 */
+    spacing: 8px; /* space.2 — card above, trigger below */
 }
 
 .aera-system-card {
@@ -20,18 +20,54 @@
     border-radius: 16px; /* radius.lg */
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22); /* shadow.floating */
     transition-duration: 250ms; /* motion.durations.normal */
+    spacing: 12px; /* space.3 */
 }
 
 /* light.surface.card + light.border.glass */
-.aera-system-root.aera-light.aera-system-card {
+.aera-system-root.aera-light .aera-system-card {
     background-color: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.80);
 }
 
 /* dark.surface.card + dark.border.glass */
-.aera-system-root.aera-dark.aera-system-card {
+.aera-system-root.aera-dark .aera-system-card {
     background-color: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* ── Trigger button (opens/closes the tray) ─────────────────────────────────── */
+.aera-system-trigger {
+    width: 38px; /* components.compact.height */
+    height: 38px;
+    border-radius: 999px; /* radius.pill */
+    border: 1px solid transparent;
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+/* light.surface.inner + light.border.subtle + light.text.secondary */
+.aera-system-root.aera-light .aera-system-trigger {
+    background-color: rgba(255, 255, 255, 0.60);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #4B5563;
+}
+
+/* dark.surface.inner + dark.border.subtle + dark.text.secondary */
+.aera-system-root.aera-dark .aera-system-trigger {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #C6CBD3;
+}
+
+.aera-system-trigger:hover,
+.aera-system-trigger:focus {
+    border-color: #03DFF8; /* accent.primary */
+}
+
+.aera-system-root .aera-system-trigger.aera-open {
+    background-color: #03DFF8; /* accent.primary */
+    border-color: #03DFF8;
+    color: #061316; /* accent.onPrimary */
+    box-shadow: 0 0 14px rgba(3, 223, 248, 0.35); /* accent.glow */
 }
 
 /* ── Layout rows ────────────────────────────────────────────────────────────── */

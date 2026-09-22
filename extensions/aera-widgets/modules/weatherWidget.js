@@ -408,6 +408,19 @@ export class AeraWeatherWidget {
         this._stopGeoClue();
         this._setState('loading', 'Getting location…');
 
+        // GeoClue refuses every client while the system Location Services
+        // switch is off (default on fresh installs) — say so directly.
+        try {
+            const locSettings = Gio.Settings.new('org.gnome.system.location');
+            if (!locSettings.get_boolean('enabled')) {
+                this._setState('error', 'Enable Location Services in Settings');
+                this._scheduleRefresh();
+                return;
+            }
+        } catch {
+            // Schema not installed — let GeoClue itself answer
+        }
+
         try {
             const manager = Gio.DBusProxy.new_for_bus_sync(
                 Gio.BusType.SYSTEM, Gio.DBusProxyFlags.NONE, null,
@@ -448,7 +461,11 @@ export class AeraWeatherWidget {
                 });
         } catch (e) {
             this._stopGeoClue();
-            this._setState('error', 'Location service unavailable');
+            // Surface the real D-Bus reason (trimmed) — never a vague label
+            const reason = `${e.message ?? e}`
+                .replace(/^GDBus\.Error:[^:]+:\s*/, '').trim();
+            this._setState('error',
+                reason ? `Location: ${reason.slice(0, 60)}` : 'Location unavailable');
             this._scheduleRefresh();
         }
     }

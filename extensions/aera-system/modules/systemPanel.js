@@ -7,10 +7,11 @@
 
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import Clutter from 'gi://Clutter';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-import { space, components } from '../aera-tokens.js';
+import { space, motion, components } from '../aera-tokens.js';
 
 import { WifiTile } from './wifiTile.js';
 import { BluetoothTile } from './bluetoothTile.js';
@@ -22,14 +23,36 @@ import { BrightnessSlider } from './brightnessTile.js';
 export class SystemPanel {
     constructor() {
         this._repositioning = false;
+        this._open = false;
 
         this.actor = new St.BoxLayout({
             name: 'aeraSystemPanel',
-            style_class: 'aera-system-root aera-system-card',
+            style_class: 'aera-system-root',
             vertical: true,
             reactive: true,
             track_hover: true,
         });
+
+        // The card is collapsed by default — the trigger button below it
+        // opens/closes the tray (reference layout: grid button bottom-right).
+        this._card = new St.BoxLayout({
+            style_class: 'aera-system-card',
+            vertical: true,
+            reactive: true,
+            track_hover: true,
+            visible: false,
+        });
+
+        this._trigger = new St.Button({
+            style_class: 'aera-system-trigger',
+            can_focus: true,
+            x_align: Clutter.ActorAlign.END,
+            child: new St.Icon({
+                icon_name: 'view-grid-symbolic',
+                icon_size: 16,
+            }),
+        });
+        this._trigger.connect('clicked', () => this.toggle());
 
         // ── Light/dark scheme class (St can't match GTK theme selectors) ─────
         // color-scheme / gtk-theme live in org.gnome.desktop.interface —
@@ -63,7 +86,7 @@ export class SystemPanel {
             const row = new St.BoxLayout({ style_class: 'aera-system-row' });
             for (const t of availableTiles.slice(i, i + 3))
                 row.add_child(t.tile.actor);
-            this.actor.add_child(row);
+            this._card.add_child(row);
         }
 
         const sliderBox = new St.BoxLayout({
@@ -75,7 +98,10 @@ export class SystemPanel {
                 sliderBox.add_child(slider.tile.actor);
         }
         if (sliderBox.get_n_children() > 0)
-            this.actor.add_child(sliderBox);
+            this._card.add_child(sliderBox);
+
+        this.actor.add_child(this._card);
+        this.actor.add_child(this._trigger);
 
         // ── Repositioning (mirrors dock.js / WidgetManager) ──────────────────
         this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
@@ -86,6 +112,37 @@ export class SystemPanel {
             this._queueReposition();
         });
 
+        this._queueReposition();
+    }
+
+    toggle() {
+        this._open = !this._open;
+        this._trigger.checked = this._open;
+        this._trigger.add_style_class_name(this._open ? 'aera-open' : 'aera-closed');
+        this._trigger.remove_style_class_name(this._open ? 'aera-closed' : 'aera-open');
+
+        if (this._open) {
+            this._card.show();
+            this._card.opacity = 0;
+            this._card.ease({
+                opacity: 255,
+                duration: motion.durations.normal,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+            });
+        } else {
+            this._card.ease({
+                opacity: 0,
+                duration: motion.durations.normal,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                onComplete: () => {
+                    // Guard: a fast re-open while this completes must not hide it
+                    if (!this._open && !this._destroyed) {
+                        this._card.hide();
+                        this._queueReposition();
+                    }
+                },
+            });
+        }
         this._queueReposition();
     }
 
@@ -122,20 +179,22 @@ export class SystemPanel {
             const width = natWidth > 0 ? natWidth : components.system.width;
             const height = natHeight > 0 ? natHeight : components.compact.height;
 
-            // Bottom-right anchored, same vertical offset as the widget zone:
-            // dock height + space.4 gap above the bottom edge
+            // Bottom-right anchored, bottom-aligned with the dock (space.1
+            // above the bottom edge). No set_size —
+            // the chrome actor is allocated its natural size, and forcing the
+            // collapsed size on it made the opened card overflow off-screen.
             const x = Math.round(monitor.x + monitor.width - width - space[6]);
-            const y = Math.round(monitor.y + monitor.height - height
-                - (components.dock.height + space[4]));
+            const y = Math.round(monitor.y + monitor.height - height - space[1]);
 
             this.actor.set_position(x, y);
-            this.actor.set_size(width, height);
         } finally {
             this._repositioning = false;
         }
     }
 
     destroy() {
+        this._destroyed = true;
+
         if (this._queuedRepositionId) {
             GLib.source_remove(this._queuedRepositionId);
             this._queuedRepositionId = null;

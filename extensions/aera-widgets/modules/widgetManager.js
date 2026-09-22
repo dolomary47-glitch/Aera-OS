@@ -92,22 +92,19 @@ export class WidgetManager {
             if (!monitor || !this.actor) return;
 
             this.actor.ensure_style();
-            const [, natWidth] = this.actor.get_preferred_width(-1);
             const [, natHeight] = this.actor.get_preferred_height(-1);
 
-            // Fallbacks: components.widget.width + a single compact card
-            const width = natWidth > 0 ? natWidth : components.widget.width;
+            // Fallback: a single compact card
             const height = natHeight > 0 ? natHeight : components.compact.height;
 
-            // Bottom-left anchored, stacked above the dock:
-            //   left  = monitor.x + space.6 (24)
-            //   above = dock height + space.4 gap from the bottom edge
+            // Bottom-left anchored, bottom-aligned with the dock, which sits
+            // space.1 above the bottom edge (dock.js: height - 4)
             const x = Math.round(monitor.x + space[6]);
-            const y = Math.round(monitor.y + monitor.height - height
-                - (components.dock.height + space[4]));
+            const y = Math.round(monitor.y + monitor.height - height - space[1]);
 
+            // No set_size: the chrome actor takes its natural size, and
+            // forcing a stale one made state changes overflow the actor.
             this.actor.set_position(x, y);
-            this.actor.set_size(width, height);
         } finally {
             this._repositioning = false;
         }

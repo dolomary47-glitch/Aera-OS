@@ -11,7 +11,7 @@ A custom desktop environment built on GNOME Shell 46 (Ubuntu 24.04 target), deve
 | Hero clock | `extensions/aera-clock` | S5 | Large centered desktop clock, anchored behind windows. |
 | Dock | `extensions/aera-dock` | S6 | Floating split-pill dock: launcher, running apps, multitasking toggle (symbolic CSS-tintable icons). |
 | Widget zone | `extensions/aera-widgets` | S4/7/8 | Bottom-left widget column. Weather widget: live Open-Meteo data, GeoClue2 auto-location with city-search override, locale-aware units, 15–30 min refresh, GSettings persistence. |
-| System panel | `extensions/aera-system` | S8/9 | Bottom-right quick-settings card: Wi-Fi (NetworkManager), Bluetooth (BlueZ), battery (UPower), screenshot/record (Shell built-in UI), volume (Gvc/PipeWire), brightness (GNSSD Power). Unavailable backends hide their control — nothing is faked. |
+| System panel | `extensions/aera-system` | S8/9 | Bottom-right quick-settings tray, collapsed by default behind a grid trigger button (click to open/close). Tiles: Wi-Fi (NetworkManager), Bluetooth (BlueZ), battery (UPower), screenshot/record (Shell built-in UI); sliders: volume (Gvc/PipeWire), brightness (GNSSD Power). Unavailable backends hide their control — nothing is faked. |
 
 ## Install (dev host or VM)
 
