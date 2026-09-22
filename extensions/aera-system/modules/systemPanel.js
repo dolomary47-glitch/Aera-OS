@@ -6,6 +6,7 @@
  */
 
 import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
@@ -31,9 +32,14 @@ export class SystemPanel {
         });
 
         // ── Light/dark scheme class (St can't match GTK theme selectors) ─────
-        this._colorSchemeChangedId = global.settings.connect(
+        // color-scheme / gtk-theme live in org.gnome.desktop.interface —
+        // global.settings (org.gnome.shell) has no such key on Shell 46.
+        this._interfaceSettings = new Gio.Settings({
+            schema_id: 'org.gnome.desktop.interface',
+        });
+        this._colorSchemeChangedId = this._interfaceSettings.connect(
             'changed::color-scheme', () => this._updateColorScheme());
-        this._gtkThemeChangedId = global.settings.connect(
+        this._gtkThemeChangedId = this._interfaceSettings.connect(
             'changed::gtk-theme', () => this._updateColorScheme());
         this._updateColorScheme();
 
@@ -85,8 +91,8 @@ export class SystemPanel {
     }
 
     _updateColorScheme() {
-        const scheme = global.settings.get_string('color-scheme') || '';
-        const theme = global.settings.get_string('gtk-theme') || '';
+        const scheme = this._interfaceSettings.get_string('color-scheme');
+        const theme = this._interfaceSettings.get_string('gtk-theme') || '';
         const dark = scheme.includes('dark') || theme.toLowerCase().includes('dark');
 
         this.actor.remove_style_class_name(dark ? 'aera-light' : 'aera-dark');
@@ -147,14 +153,16 @@ export class SystemPanel {
         }
 
         if (this._colorSchemeChangedId) {
-            global.settings.disconnect(this._colorSchemeChangedId);
+            this._interfaceSettings.disconnect(this._colorSchemeChangedId);
             this._colorSchemeChangedId = null;
         }
 
         if (this._gtkThemeChangedId) {
-            global.settings.disconnect(this._gtkThemeChangedId);
+            this._interfaceSettings.disconnect(this._gtkThemeChangedId);
             this._gtkThemeChangedId = null;
         }
+
+        this._interfaceSettings = null;
 
         for (const item of this._items ?? [])
             item.destroy();
