@@ -104,7 +104,7 @@ export const motion = {
 };
 
 export const components = {
-    dock:    { height: 56 },
+    dock:    { height: 48, button: 40, icon: 26, launcherIcon: 24 },
     slider:  { height: 28 },
     compact: { height: 38 },
     widget:  { width: 320 },

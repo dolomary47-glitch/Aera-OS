@@ -106,14 +106,15 @@ export class AeraDock {
             const [, natHeight] = this.actor.get_preferred_height(-1);
 
             const width = natWidth > 0 ? natWidth : 350;
-            const height = natHeight > 0 ? natHeight : 54;
+            const height = natHeight > 0 ? natHeight : 48;
 
-            // Centered horizontally, 4px from the bottom edge
+            // Centered horizontally, 4px from the bottom edge.
+            // Position only — set_size() would pin the allocation, and then
+            // adding/removing apps no longer resized (or re-centered) the dock.
             const x = Math.round(monitor.x + (monitor.width - width) / 2);
             const y = Math.round(monitor.y + monitor.height - height - 4);
 
             this.actor.set_position(x, y);
-            this.actor.set_size(width, height);
         } finally {
             this._repositioning = false;
         }

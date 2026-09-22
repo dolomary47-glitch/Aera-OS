@@ -8,6 +8,8 @@ import Shell from 'gi://Shell';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
+import { components } from '../aera-tokens.js';
+
 export class AppItem {
     constructor(app, isFavorite, showTooltip, hideTooltip) {
         this.app = app;
@@ -34,11 +36,11 @@ export class AppItem {
         this.actor.set_child(this._contentBox);
 
         // App Icon
-        this._icon = this.app.create_icon_texture(34);
+        this._icon = this.app.create_icon_texture(components.dock.icon);
         if (!this._icon) {
             this._icon = new St.Icon({
                 icon_name: 'application-x-executable',
-                icon_size: 34,
+                icon_size: components.dock.icon,
             });
         }
         this._icon.x_align = Clutter.ActorAlign.CENTER;

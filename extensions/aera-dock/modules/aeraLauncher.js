@@ -5,6 +5,8 @@
 
 import Clutter from 'gi://Clutter';
 import Gio from 'gi://Gio';
+
+import { components } from '../aera-tokens.js';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
@@ -31,7 +33,7 @@ export class AeraLauncher {
         this._icon = new St.Icon({
             gicon: iconGIcon,
             style_class: 'aera-dock-launcher-icon',
-            icon_size: 30,
+            icon_size: components.dock.launcherIcon,
         });
         this.actor.set_child(this._icon);
 

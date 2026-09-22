@@ -22,8 +22,9 @@
 }
 
 .aera-dock-launcher-button {
-    width: 46px;
-    height: 46px;
+    /* components.dock.button */
+    width: 40px;
+    height: 40px;
     border-radius: 8px 0 0 8px;
     border: 1px solid transparent;
     transition-duration: 120ms;
@@ -48,7 +49,8 @@
  * light in both (light/dark.text.on-dark token). */
 
 .aera-dock-launcher-icon {
-    icon-size: 30px;
+    /* components.dock.launcherIcon */
+    icon-size: 24px;
 
     /* accent.primary */
     color: #03DFF8;
@@ -77,8 +79,9 @@
 
 /* ── Individual App Item ────────────────────────────────────────────────────── */
 .aera-dock-app-button {
-    width: 46px;
-    height: 46px;
+    /* components.dock.button */
+    width: 40px;
+    height: 40px;
     border-radius: 8px;
     border: 1px solid transparent;
     transition-duration: 120ms;
@@ -95,7 +98,8 @@
 }
 
 .aera-dock-app-icon {
-    icon-size: 34px;
+    /* components.dock.icon */
+    icon-size: 26px;
 }
 
 /* ── Running Indicator Dot ─────────────────────────────────────────────────── */
@@ -120,8 +124,9 @@
 }
 
 .aera-dock-overview-button {
-    width: 46px;
-    height: 46px;
+    /* components.dock.button */
+    width: 40px;
+    height: 40px;
     border-radius: 0 8px 8px 0;
     border: 1px solid transparent;
     transition-duration: 120ms;
@@ -140,8 +145,8 @@
 
 /* ── Multitasking icon (symbolic, tinted via CSS `color`) ────────────────── */
 .aera-dock-overview-icon {
-    /* Matches the 34px app icons (create_icon_texture(34)) */
-    icon-size: 34px;
+    /* components.dock.icon — matches the app icons */
+    icon-size: 26px;
 
     /* light.text.on-dark at 0.85 → resting icon sits slightly below the
      * focused app icons (derived dim, see aera-clock convention) */

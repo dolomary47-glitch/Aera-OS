@@ -8,6 +8,8 @@ import Gio from 'gi://Gio';
 import St from 'gi://St';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
+import { components } from '../aera-tokens.js';
+
 export class WorkspaceManager {
     constructor(extensionPath, showTooltip, hideTooltip) {
         this._extensionPath = extensionPath;
@@ -37,7 +39,7 @@ export class WorkspaceManager {
         this._overviewIcon = new St.Icon({
             gicon: iconGIcon,
             style_class: 'aera-dock-overview-icon',
-            icon_size: 34,
+            icon_size: components.dock.icon,
         });
         this._overviewButton.set_child(this._overviewIcon);
 
