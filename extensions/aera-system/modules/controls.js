@@ -24,35 +24,32 @@ export class ToggleTile {
             icon_name: iconName,
             style_class: 'quick-toggle-icon',
             icon_size: 18,
+            x_align: Clutter.ActorAlign.CENTER,
         });
 
         this._title = new St.Label({
             text: title,
             style_class: 'quick-toggle-title',
-            y_align: Clutter.ActorAlign.CENTER,
+            x_align: Clutter.ActorAlign.CENTER,
         });
 
         this._subtitle = new St.Label({
             text: subtitle,
             style_class: 'quick-toggle-subtitle',
-            x_align: Clutter.ActorAlign.START,
+            x_align: Clutter.ActorAlign.CENTER,
             visible: subtitle !== '',
         });
 
-        const textBox = new St.BoxLayout({
-            vertical: true,
-            x_expand: true,
-            style_class: 'aera-quick-toggle-text',
-        });
-        textBox.add_child(this._title);
-        textBox.add_child(this._subtitle);
-
+        // Shell 46 quick-settings convention: icon stacked above the labels
         const box = new St.BoxLayout({
+            vertical: true,
             y_align: Clutter.ActorAlign.CENTER,
             x_expand: true,
+            style_class: 'aera-quick-toggle-box',
         });
         box.add_child(this._icon);
-        box.add_child(textBox);
+        box.add_child(this._title);
+        box.add_child(this._subtitle);
 
         this.actor.child = box;
     }
@@ -84,8 +81,22 @@ export class ToggleTile {
 }
 
 export class SliderTile {
-    constructor({ iconName, value = 0 }) {
+    constructor({ iconName, value = 0, title = '' }) {
         this.actor = new St.BoxLayout({
+            style_class: 'aera-slider-block',
+            vertical: true,
+            x_expand: true,
+        });
+
+        if (title) {
+            this.actor.add_child(new St.Label({
+                text: title,
+                style_class: 'aera-slider-caption',
+                x_align: Clutter.ActorAlign.START,
+            }));
+        }
+
+        const row = new St.BoxLayout({
             style_class: 'aera-quick-slider quick-slider',
             y_align: Clutter.ActorAlign.CENTER,
             x_expand: true,
@@ -104,8 +115,9 @@ export class SliderTile {
         this._slider.add_style_class_name('aera-slider');
         this._slider.x_expand = true;
 
-        this.actor.add_child(this._iconButton);
-        this.actor.add_child(this._slider);
+        row.add_child(this._iconButton);
+        row.add_child(this._slider);
+        this.actor.add_child(row);
 
         this._syncing = false;
     }

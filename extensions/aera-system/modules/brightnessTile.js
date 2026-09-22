@@ -33,6 +33,7 @@ export class BrightnessSlider {
         this.tile = new SliderTile({
             iconName: 'display-brightness-symbolic',
             value: 0,
+            title: 'Display',
         });
         this.tile.onChanged(v => this._apply(v));
         this._propsChangedId = this._proxy.connect('g-properties-changed', () => {

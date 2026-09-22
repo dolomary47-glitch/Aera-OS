@@ -17,7 +17,7 @@
 
 /* ── Card surface ───────────────────────────────────────────────────────────── */
 .aera-widget-card {
-    width: 240px; /* components.widget.width */
+    width: 320px; /* components.widget.width */
     padding: 12px 16px; /* space.3 space.4 */
     border-radius: 16px; /* radius.lg */
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22); /* shadow.floating */

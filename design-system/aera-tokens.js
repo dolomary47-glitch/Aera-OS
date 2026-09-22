@@ -106,6 +106,6 @@ export const components = {
     dock:    { height: 56 },
     slider:  { height: 28 },
     compact: { height: 38 },
-    widget:  { width: 240 },
+    widget:  { width: 320 },
     system:  { width: 300 },
 };

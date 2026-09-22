@@ -39,6 +39,14 @@
     spacing: 12px; /* space.3, matches .quick-settings-grid */
 }
 
+/* Shell's base theme pins .quick-toggle to 12em min/max width, which blows
+   two tiles past our fixed-width card and off the screen edge. Release it —
+   the row's x_expand tiles split the card width evenly. */
+.aera-system-root .quick-toggle {
+    min-width: 0;
+    max-width: none;
+}
+
 .aera-system-sliders {
     spacing: 4px; /* space.1 */
 }
@@ -47,8 +55,16 @@
 .aera-quick-toggle {
     border-radius: 12px; /* radius.md */
     border: 1px solid transparent;
-    padding: 8px 12px; /* space.2 space.3 */
+    padding: 10px 8px; /* space.2-ish, room for the stacked icon + labels */
     transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-quick-toggle-box {
+    spacing: 2px;
+}
+
+.aera-quick-toggle .quick-toggle-icon {
+    margin-bottom: 4px; /* space.1 */
 }
 
 .aera-system-root.aera-light .aera-quick-toggle {
@@ -84,10 +100,6 @@
     border-color: #02B8D0;
 }
 
-.aera-quick-toggle-text {
-    spacing: 2px;
-}
-
 .aera-quick-toggle .quick-toggle-title {
     font-size: 13px; /* type.label */
     font-weight: 600;
@@ -112,6 +124,23 @@
 }
 
 /* ── Slider rows ────────────────────────────────────────────────────────────── */
+.aera-slider-block {
+    spacing: 4px; /* space.1 */
+}
+
+.aera-slider-caption {
+    font-size: 11px; /* type.caption */
+    font-weight: 600;
+}
+
+.aera-system-root.aera-light .aera-slider-caption {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-system-root.aera-dark .aera-slider-caption {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
 .aera-quick-slider {
     spacing: 8px; /* space.2 */
     min-height: 28px; /* components.slider.height */

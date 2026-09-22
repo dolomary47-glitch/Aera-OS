@@ -57,13 +57,12 @@ export class SystemPanel {
 
         this._items = [...tiles, ...sliders].filter(item => item.available);
 
-        // Two tiles per row
+        // Three icon-topped tiles per row (mirrors the QS grid density)
         const availableTiles = tiles.filter(t => t.available);
-        for (let i = 0; i < availableTiles.length; i += 2) {
+        for (let i = 0; i < availableTiles.length; i += 3) {
             const row = new St.BoxLayout({ style_class: 'aera-system-row' });
-            row.add_child(availableTiles[i].tile.actor);
-            if (availableTiles[i + 1])
-                row.add_child(availableTiles[i + 1].tile.actor);
+            for (const t of availableTiles.slice(i, i + 3))
+                row.add_child(t.tile.actor);
             this.actor.add_child(row);
         }
 

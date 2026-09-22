@@ -20,6 +20,7 @@ export class VolumeSlider {
         this.tile = new SliderTile({
             iconName: 'audio-volume-muted-symbolic',
             value: 0,
+            title: 'Sounds',
         });
         this.tile.onChanged(v => this._applyVolume(v));
         this.tile.onIconClicked(() => this._toggleMute());

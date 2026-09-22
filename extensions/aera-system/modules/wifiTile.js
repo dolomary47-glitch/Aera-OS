@@ -72,7 +72,7 @@ export class WifiTile {
     _render() {
         try {
             const enabled = readProperty(this._proxy, NM_IFACE, 'WirelessEnabled');
-            const hwEnabled = readProperty(this._proxy, NM_IFACE, 'WirelessHwEnabled');
+            const hwEnabled = readProperty(this._proxy, NM_IFACE, 'WirelessHardwareEnabled');
 
             this.tile.state = enabled;
             if (!hwEnabled)

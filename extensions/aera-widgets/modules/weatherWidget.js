@@ -45,6 +45,7 @@ export class AeraWeatherWidget {
         this._destroyed = false;
         this._fetchSeq = 0;
         this._pulsing = false;
+        this._pulseId = 0;
         this._place = '';
 
         // ── Card shell ───────────────────────────────────────────────────────
@@ -262,28 +263,31 @@ export class AeraWeatherWidget {
     _startPulse() {
         if (this._pulsing) return;
         this._pulsing = true;
-        const tick = () => {
-            if (this._destroyed || !this._pulsing) return;
+        // Fire-and-forget flips on a timeout instead of chaining ease() via
+        // onComplete: an unmapped actor completes transitions synchronously,
+        // which turned chained callbacks into unbounded recursion.
+        let dim = false;
+        const step = () => {
+            if (this._destroyed || !this._pulsing) return GLib.SOURCE_REMOVE;
+            dim = !dim;
             this._textBox.ease({
-                opacity: 80,
+                opacity: dim ? 80 : 255,
                 duration: motion.durations.smooth,
                 mode: Clutter.AnimationMode.EASE_IN_OUT_QUAD,
-                onComplete: () => {
-                    if (this._destroyed || !this._pulsing) return;
-                    this._textBox.ease({
-                        opacity: 255,
-                        duration: motion.durations.smooth,
-                        mode: Clutter.AnimationMode.EASE_IN_OUT_QUAD,
-                        onComplete: tick,
-                    });
-                },
             });
+            return GLib.SOURCE_CONTINUE;
         };
-        tick();
+        step();
+        this._pulseId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT, motion.durations.smooth, step);
     }
 
     _stopPulse() {
         this._pulsing = false;
+        if (this._pulseId) {
+            GLib.source_remove(this._pulseId);
+            this._pulseId = 0;
+        }
         this._textBox.ease({ opacity: 255, duration: 0 });
     }
 
