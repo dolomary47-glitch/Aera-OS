@@ -23,13 +23,15 @@ export class AeraLauncher {
             y_align: Clutter.ActorAlign.CENTER,
         });
 
-        // Icon
-        const iconFile = Gio.File.new_for_path(`${this._extensionPath}/assets/aera-launcher.svg`);
+        // Symbolic icon: the "-symbolic.svg" filename suffix makes St tint
+        // every shape fill with the CSS `color` of .aera-dock-launcher-icon,
+        // so the artwork follows hover/active states and both color schemes.
+        const iconFile = Gio.File.new_for_path(`${this._extensionPath}/assets/aera-launcher-symbolic.svg`);
         const iconGIcon = new Gio.FileIcon({ file: iconFile });
         this._icon = new St.Icon({
             gicon: iconGIcon,
             style_class: 'aera-dock-launcher-icon',
-            icon_size: 28,
+            icon_size: 30,
         });
         this.actor.set_child(this._icon);
 

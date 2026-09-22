@@ -40,8 +40,29 @@
     border-color: rgba(255, 255, 255, 0.25);
 }
 
+/* ── Symbolic icon tinting ──────────────────────────────────────────────────
+ * The launcher and overview icons are loaded from *-symbolic.svg files;
+ * St replaces every shape fill with the CSS `color` of the St.Icon, so the
+ * tint (and hover/active/checked states) is fully styleable here.
+ * The dock surface is dark glass in both color schemes, so tints stay
+ * light in both (light/dark.text.on-dark token). */
+
 .aera-dock-launcher-icon {
     icon-size: 30px;
+
+    /* accent.primary */
+    color: #03DFF8;
+}
+
+.aera-dock-launcher-button:hover .aera-dock-launcher-icon {
+    /* accent.hover */
+    color: #33E8FA;
+}
+
+.aera-dock-launcher-button:active .aera-dock-launcher-icon,
+.aera-dock-launcher-button:checked .aera-dock-launcher-icon {
+    /* accent.pressed */
+    color: #02B8D0;
 }
 
 /* ── Right Segment: Apps & Multitasking (Left side straight, right side rounded) */
@@ -115,6 +136,27 @@
 .aera-dock-overview-button:checked {
     background-color: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.20);
+}
+
+/* ── Multitasking icon (symbolic, tinted via CSS `color`) ────────────────── */
+.aera-dock-overview-icon {
+    /* Matches the 34px app icons (create_icon_texture(34)) */
+    icon-size: 34px;
+
+    /* light.text.on-dark at 0.85 → resting icon sits slightly below the
+     * focused app icons (derived dim, see aera-clock convention) */
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.aera-dock-overview-button:hover .aera-dock-overview-icon {
+    /* light.text.on-dark */
+    color: #FFFFFF;
+}
+
+.aera-dock-overview-button:active .aera-dock-overview-icon,
+.aera-dock-overview-button:checked .aera-dock-overview-icon {
+    /* accent.primary — multitasking view is open */
+    color: #03DFF8;
 }
 
 /* ── Tooltip Bubble ────────────────────────────────────────────────────────── */

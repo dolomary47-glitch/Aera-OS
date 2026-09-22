@@ -1,0 +1,14 @@
+{
+  "name": "Aera Widgets",
+  "description": "The Aera OS desktop widget zone: a bottom-left column of live, system-driven widget cards.",
+  "uuid": "aera-widgets@aeraos",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ],
+  "version": 1
+}

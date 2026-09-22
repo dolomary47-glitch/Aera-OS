@@ -1,0 +1,164 @@
+/* =============================================================================
+ * Aera System — Extension Stylesheet
+ * Floating quick-settings card, token-driven (design-system/tokens.json).
+ *
+ * Tiles carry the shell's .quick-toggle class (so the Aera theme can style
+ * them too), but every visual is defined here against the token pair system:
+ * the panel sets aera-light / aera-dark on its root from the system
+ * color-scheme, because :-gtk-dark is inert in St CSS.
+ * ============================================================================= */
+
+/* ── Card shell ─────────────────────────────────────────────────────────────── */
+.aera-system-root {
+    font-family: Inter, 'SF Pro Display', Cantarell, Ubuntu, sans-serif; /* typography.family.system */
+    spacing: 12px; /* space.3 */
+}
+
+.aera-system-card {
+    width: 300px; /* components.system.width */
+    padding: 16px; /* space.4 */
+    border-radius: 16px; /* radius.lg */
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22); /* shadow.floating */
+    transition-duration: 250ms; /* motion.durations.normal */
+}
+
+/* light.surface.card + light.border.glass */
+.aera-system-root.aera-light.aera-system-card {
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.80);
+}
+
+/* dark.surface.card + dark.border.glass */
+.aera-system-root.aera-dark.aera-system-card {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* ── Layout rows ────────────────────────────────────────────────────────────── */
+.aera-system-row {
+    spacing: 12px; /* space.3, matches .quick-settings-grid */
+}
+
+.aera-system-sliders {
+    spacing: 4px; /* space.1 */
+}
+
+/* ── Toggle tiles (on top of .quick-toggle conventions) ─────────────────────── */
+.aera-quick-toggle {
+    border-radius: 12px; /* radius.md */
+    border: 1px solid transparent;
+    padding: 8px 12px; /* space.2 space.3 */
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-system-root.aera-light .aera-quick-toggle {
+    background-color: rgba(255, 255, 255, 0.60); /* light.surface.inner */
+    border-color: rgba(0, 0, 0, 0.08); /* light.border.subtle */
+    color: #111827; /* light.text.primary */
+}
+
+.aera-system-root.aera-dark .aera-quick-toggle {
+    background-color: rgba(255, 255, 255, 0.06); /* dark.surface.inner */
+    border-color: rgba(255, 255, 255, 0.08); /* dark.border.subtle */
+    color: #FFFFFF; /* dark.text.primary */
+}
+
+.aera-quick-toggle:hover {
+    border-color: #03DFF8; /* states.active.color */
+}
+
+.aera-quick-toggle:focus {
+    border-color: #03DFF8; /* states.focus.color */
+}
+
+/* ON state — accent.primary fill, onPrimary foreground, accent glow */
+.aera-quick-toggle:checked {
+    background-color: #03DFF8;
+    border-color: #03DFF8;
+    color: #061316; /* accent.onPrimary */
+    box-shadow: 0 0 14px rgba(3, 223, 248, 0.35); /* accent.glow */
+}
+
+.aera-quick-toggle:active {
+    background-color: #02B8D0; /* accent.pressed */
+    border-color: #02B8D0;
+}
+
+.aera-quick-toggle-text {
+    spacing: 2px;
+}
+
+.aera-quick-toggle .quick-toggle-title {
+    font-size: 13px; /* type.label */
+    font-weight: 600;
+}
+
+.aera-quick-toggle .quick-toggle-subtitle {
+    font-size: 11px; /* type.caption */
+    font-weight: 500;
+}
+
+.aera-system-root.aera-light .aera-quick-toggle .quick-toggle-subtitle {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-system-root.aera-dark .aera-quick-toggle .quick-toggle-subtitle {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+.aera-quick-toggle:checked .quick-toggle-title,
+.aera-quick-toggle:checked .quick-toggle-subtitle {
+    color: #061316; /* accent.onPrimary */
+}
+
+/* ── Slider rows ────────────────────────────────────────────────────────────── */
+.aera-quick-slider {
+    spacing: 8px; /* space.2 */
+    min-height: 28px; /* components.slider.height */
+}
+
+.aera-slider-icon {
+    width: 28px; /* components.slider.height */
+    height: 28px;
+    border-radius: 999px; /* radius.pill */
+    padding: 5px;
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-system-root.aera-light .aera-slider-icon {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-system-root.aera-dark .aera-slider-icon {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+.aera-slider-icon:hover {
+    background-color: rgba(255, 255, 255, 0.10); /* states.hover.surface_boost */
+    color: #03DFF8; /* accent.primary */
+}
+
+/* Slider track — Shell BarLevel custom style properties */
+.aera-slider {
+    -barlevel-height: 6px;
+    -slider-handle-radius: 8px; /* radius.sm */
+    -slider-handle-border-width: 1px;
+}
+
+.aera-system-root.aera-light .aera-slider {
+    -barlevel-background-color: rgba(0, 0, 0, 0.08); /* light.border.subtle */
+    -barlevel-border-color: rgba(0, 0, 0, 0.08);
+    -barlevel-active-background-color: #03DFF8; /* accent.primary */
+    -barlevel-active-border-color: #03DFF8;
+    -slider-handle-border-color: rgba(0, 0, 0, 0.08); /* light.border.subtle */
+    color: #FFFFFF; /* light.surface.strong — handle fill */
+}
+
+.aera-system-root.aera-dark .aera-slider {
+    -barlevel-background-color: rgba(255, 255, 255, 0.08); /* dark.border.subtle */
+    -barlevel-border-color: rgba(255, 255, 255, 0.08);
+    -barlevel-active-background-color: #03DFF8; /* accent.primary */
+    -barlevel-active-border-color: #03DFF8;
+    -slider-handle-border-color: rgba(255, 255, 255, 0.16); /* dark.border.glass */
+    color: #FFFFFF; /* dark.text.primary — handle fill */
+}

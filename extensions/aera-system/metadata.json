@@ -1,0 +1,14 @@
+{
+  "name": "Aera System",
+  "description": "The Aera OS floating system panel: real Wi-Fi, Bluetooth, battery, volume, brightness and screenshot controls.",
+  "uuid": "aera-system@aeraos",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ],
+  "version": 1
+}

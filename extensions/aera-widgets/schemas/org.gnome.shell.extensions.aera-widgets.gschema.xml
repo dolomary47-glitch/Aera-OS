@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.aera-widgets"
+          path="/org/gnome/shell/extensions/aera-widgets/">
+
+    <!-- Weather widget: location -->
+    <key name="weather-location-mode" type="s">
+      <default>'auto'</default>
+      <summary>Weather location source</summary>
+      <description>'auto' resolves the position through GeoClue2; 'manual' uses the saved coordinates.</description>
+    </key>
+
+    <key name="weather-latitude" type="d">
+      <default>0.0</default>
+      <summary>Manual weather latitude</summary>
+    </key>
+
+    <key name="weather-longitude" type="d">
+      <default>0.0</default>
+      <summary>Manual weather longitude</summary>
+    </key>
+
+    <key name="weather-location-name" type="s">
+      <default>''</default>
+      <summary>Display name for the manual weather location</summary>
+    </key>
+
+    <!-- Weather widget: units -->
+    <key name="weather-units" type="s">
+      <default>'auto'</default>
+      <summary>Temperature units</summary>
+      <description>'auto' follows the system locale; 'metric' forces Celsius; 'imperial' forces Fahrenheit.</description>
+    </key>
+
+    <!-- Weather widget: refresh cadence (minutes) -->
+    <key name="weather-refresh-minutes" type="i">
+      <default>20</default>
+      <summary>Weather refresh interval in minutes</summary>
+      <range min="15" max="30"/>
+    </key>
+  </schema>
+</schemalist>

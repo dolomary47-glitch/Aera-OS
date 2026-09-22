@@ -29,11 +29,15 @@ export class WorkspaceManager {
             y_align: Clutter.ActorAlign.CENTER,
         });
 
-        const iconFile = Gio.File.new_for_path(`${this._extensionPath}/assets/workspace-view.svg`);
+        // Symbolic icon: the "-symbolic.svg" filename suffix makes St tint
+        // every shape fill with the CSS `color` of .aera-dock-overview-icon,
+        // so the artwork follows hover/active states and both color schemes.
+        const iconFile = Gio.File.new_for_path(`${this._extensionPath}/assets/workspace-view-symbolic.svg`);
         const iconGIcon = new Gio.FileIcon({ file: iconFile });
         this._overviewIcon = new St.Icon({
             gicon: iconGIcon,
-            icon_size: 28,
+            style_class: 'aera-dock-overview-icon',
+            icon_size: 34,
         });
         this._overviewButton.set_child(this._overviewIcon);
 

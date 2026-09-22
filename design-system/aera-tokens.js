@@ -93,3 +93,19 @@ export const shadow = {
     floating: '0 14px 36px rgba(0, 0, 0, 0.22)',
     subtle:   '0 4px 14px rgba(0, 0, 0, 0.08)',
 };
+
+export const motion = {
+    durations: {
+        fast:   150,
+        normal: 250,
+        smooth: 350,
+    },
+};
+
+export const components = {
+    dock:    { height: 56 },
+    slider:  { height: 28 },
+    compact: { height: 38 },
+    widget:  { width: 240 },
+    system:  { width: 300 },
+};

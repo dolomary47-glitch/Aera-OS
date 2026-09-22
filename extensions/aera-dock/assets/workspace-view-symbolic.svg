@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Aera OS — Multitasking view (stacked window cards), symbolic icon.
+
+       GNOME Shell tints this artwork with the CSS `color` of the St.Icon
+       (st_icon_info_load_symbolic_svg overrides every shape fill with the
+       theme foreground color). This only happens because the filename ends
+       in "-symbolic.svg". fill-opacity survives the override, which is what
+       keeps the back cards dimmer than the front card. #bebebe is the
+       conventional neutral fill for previews outside the shell. -->
+  <rect x="1" y="3" width="7.5" height="10" rx="1.75" fill="#bebebe" fill-opacity="0.35"/>
+  <rect x="7.5" y="3" width="7.5" height="10" rx="1.75" fill="#bebebe" fill-opacity="0.35"/>
+  <rect x="4" y="1.5" width="8" height="13" rx="1.75" fill="#bebebe"/>
+</svg>

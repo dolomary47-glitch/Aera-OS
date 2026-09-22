@@ -1,0 +1,210 @@
+/* =============================================================================
+ * Aera Widgets — Extension Stylesheet
+ * Glass widget cards, fully token-driven (design-system/tokens.json).
+ *
+ * Light/dark: St CSS cannot match GTK theme selectors (:-gtk-dark is inert),
+ * so the WidgetManager sets aera-light / aera-dark on the root actor from the
+ * system color-scheme and every scheme-dependent rule is written as a pair.
+ * ============================================================================= */
+
+/* ── Widget column root ─────────────────────────────────────────────────────── */
+.aera-widgets-root {
+    spacing: 12px; /* space.3 */
+
+    /* typography.family.system */
+    font-family: Inter, 'SF Pro Display', Cantarell, Ubuntu, sans-serif;
+}
+
+/* ── Card surface ───────────────────────────────────────────────────────────── */
+.aera-widget-card {
+    width: 240px; /* components.widget.width */
+    padding: 12px 16px; /* space.3 space.4 */
+    border-radius: 16px; /* radius.lg */
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22); /* shadow.floating */
+    transition-duration: 250ms; /* motion.durations.normal */
+}
+
+/* light.surface.card + light.border.glass */
+.aera-widgets-root.aera-light .aera-widget-card {
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.80);
+}
+
+/* dark.surface.card + dark.border.glass */
+.aera-widgets-root.aera-dark .aera-widget-card {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* ── Weather row ────────────────────────────────────────────────────────────── */
+.aera-weather-row {
+    spacing: 12px; /* space.3 */
+}
+
+.aera-weather-text {
+    spacing: 2px;
+}
+
+/* type.metric — temperature value */
+.aera-weather-temp {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.aera-widgets-root.aera-light .aera-weather-temp {
+    color: #111827; /* light.text.primary */
+}
+
+.aera-widgets-root.aera-dark .aera-weather-temp {
+    color: #FFFFFF; /* dark.text.primary */
+}
+
+/* type.caption — condition · location */
+.aera-weather-meta {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.aera-widgets-root.aera-light .aera-weather-meta {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-widgets-root.aera-dark .aera-weather-meta {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+/* Themed symbolic weather icons are recolored via CSS `color` */
+.aera-weather-icon {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-widgets-root.aera-dark .aera-weather-icon {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+/* ── Icon buttons (settings gear, retry) ────────────────────────────────────── */
+.aera-widget-settings-button {
+    width: 28px; /* components.slider.height */
+    height: 28px;
+    border-radius: 999px; /* radius.pill */
+    border: 1px solid transparent;
+    padding: 5px;
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-widgets-root.aera-light .aera-widget-settings-button {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-widgets-root.aera-dark .aera-widget-settings-button {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+.aera-widget-settings-button:hover {
+    background-color: rgba(255, 255, 255, 0.10); /* states.hover.surface_boost */
+}
+
+.aera-widgets-root.aera-light .aera-widget-settings-button:hover {
+    /* same boost token is white-on-dark; on light glass use a derived dim */
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* panel open state — accent.muted + accent glow border */
+.aera-widget-settings-button:checked {
+    background-color: rgba(3, 223, 248, 0.20);
+    border-color: rgba(3, 223, 248, 0.35); /* accent.glow */
+    color: #03DFF8; /* accent.primary */
+}
+
+/* ── Error row ──────────────────────────────────────────────────────────────── */
+.aera-widget-error {
+    spacing: 12px; /* space.3 */
+}
+
+/* ── Inline settings panel ──────────────────────────────────────────────────── */
+.aera-widget-settings {
+    spacing: 8px; /* space.2 */
+    margin-top: 12px; /* space.3 */
+    padding-top: 12px; /* space.3 */
+}
+
+.aera-widgets-root.aera-light .aera-widget-settings {
+    border-top: 1px solid rgba(0, 0, 0, 0.08); /* light.border.subtle */
+}
+
+.aera-widgets-root.aera-dark .aera-widget-settings {
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* dark.border.subtle */
+}
+
+.aera-widget-settings-row {
+    spacing: 8px; /* space.2 */
+}
+
+/* City entry — label size, subtle surface */
+.aera-widget-entry {
+    border-radius: 8px; /* radius.sm */
+    border: 1px solid transparent;
+    padding: 4px 8px; /* space.1 space.2 */
+    font-size: 13px; /* type.label */
+    font-weight: 600;
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-widgets-root.aera-light .aera-widget-entry {
+    background-color: rgba(255, 255, 255, 0.60); /* light.surface.inner */
+    color: #111827; /* light.text.primary */
+    border-color: rgba(0, 0, 0, 0.08); /* light.border.subtle */
+}
+
+.aera-widgets-root.aera-dark .aera-widget-entry {
+    background-color: rgba(255, 255, 255, 0.06); /* dark.surface.inner */
+    color: #FFFFFF; /* dark.text.primary */
+    border-color: rgba(255, 255, 255, 0.08); /* dark.border.subtle */
+}
+
+.aera-widget-entry:focus {
+    border-color: #03DFF8; /* states.focus.color */
+}
+
+/* Pill chips (Search / Automatic location / Units) */
+.aera-widget-chip {
+    border-radius: 999px; /* radius.pill */
+    border: 1px solid transparent;
+    padding: 4px 10px; /* space.1 + */
+    font-size: 11px; /* type.caption */
+    font-weight: 500;
+    transition-duration: 150ms; /* motion.durations.fast */
+}
+
+.aera-widgets-root.aera-light .aera-widget-chip {
+    background-color: rgba(255, 255, 255, 0.70); /* light.surface.subtle */
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-widgets-root.aera-dark .aera-widget-chip {
+    background-color: rgba(255, 255, 255, 0.08); /* dark.surface.subtle */
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+.aera-widget-chip:hover {
+    border-color: #03DFF8; /* states.active.color */
+}
+
+.aera-widget-chip:checked {
+    background-color: rgba(3, 223, 248, 0.20); /* accent.muted */
+    color: #03DFF8; /* accent.primary */
+}
+
+/* Geocode feedback line */
+.aera-widget-hint {
+    font-size: 11px; /* type.caption */
+    font-weight: 500;
+}
+
+.aera-widgets-root.aera-light .aera-widget-hint {
+    color: #9CA3AF; /* light.text.muted */
+}
+
+.aera-widgets-root.aera-dark .aera-widget-hint {
+    color: #8E95A2; /* dark.text.muted */
+}

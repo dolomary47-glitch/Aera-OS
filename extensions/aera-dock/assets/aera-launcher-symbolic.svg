@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Aera OS — Aera Launcher mark (isometric cube), symbolic icon.
+
+       GNOME Shell tints this artwork with the CSS `color` of the St.Icon
+       (st_icon_info_load_symbolic_svg overrides every shape fill with the
+       theme foreground color). This only happens because the filename ends
+       in "-symbolic.svg". fill-opacity survives the override and gives the
+       three cube faces their depth: top face full, left face medium, right
+       face dark. #bebebe is the conventional neutral fill for previews
+       outside the shell. -->
+  <polygon points="8,2.4 14.5,6.15 8,9.9 1.5,6.15" fill="#bebebe"/>
+  <polygon points="1.5,6.15 8,9.9 8,13.65 1.5,9.9" fill="#bebebe" fill-opacity="0.7"/>
+  <polygon points="8,9.9 14.5,6.15 14.5,9.9 8,13.65" fill="#bebebe" fill-opacity="0.45"/>
+</svg>
