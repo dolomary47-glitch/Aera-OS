@@ -11,12 +11,37 @@
 import Clutter from 'gi://Clutter';
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import Soup from 'gi://Soup?version=3.0';
 import St from 'gi://St';
 
 import { motion } from '../aera-tokens.js';
 
 const GEOCLUE_BUS = 'org.freedesktop.GeoClue2';
 const GEOCLUE_ACCURACY_CITY = 8; // GeoClueAccuracyLevel CITY
+
+// GJS on GNOME 46 has no global fetch — HTTP goes through libsoup 3,
+// which is part of the base desktop image.
+const _httpSession = Soup.Session.new();
+
+function httpGetJson(url) {
+    return new Promise((resolve, reject) => {
+        const message = Soup.Message.new('GET', url);
+        _httpSession.send_and_read_async(message, GLib.PRIORITY_DEFAULT, null,
+            (sess, res) => {
+                try {
+                    const bytes = sess.send_and_read_finish(res);
+                    if (!bytes)
+                        throw new Error('Empty response');
+                    if (message.get_status() !== 200)
+                        throw new Error(`HTTP ${message.get_status()}`);
+                    resolve(JSON.parse(
+                        new TextDecoder().decode(bytes.get_data())));
+                } catch (e) {
+                    reject(e);
+                }
+            });
+    });
+}
 
 // WMO weather interpretation codes → label + themed symbolic icon
 const WMO_CODES = [
@@ -55,34 +80,20 @@ export class AeraWeatherWidget {
             reactive: true,
         });
 
-        // ── Data row: icon · temperature + condition · settings ─────────────
-        this._row = new St.BoxLayout({
-            style_class: 'aera-weather-row',
-            y_align: Clutter.ActorAlign.CENTER,
-        });
-
-        this._icon = new St.Icon({
-            icon_name: 'weather-clear-symbolic',
-            style_class: 'aera-weather-icon',
-            icon_size: 24,
-        });
-
+        // ── Content: place header · hero temperature · icon + details ────────
         this._textBox = new St.BoxLayout({
             vertical: true,
             x_expand: true,
             style_class: 'aera-weather-text',
         });
-        this._tempLabel = new St.Label({
-            style_class: 'aera-weather-temp',
-            text: '—',
-        });
-        this._metaLabel = new St.Label({
-            style_class: 'aera-weather-meta',
+
+        this._placeLabel = new St.Label({
+            style_class: 'aera-weather-place',
             text: '',
             x_align: Clutter.ActorAlign.START,
+            y_align: Clutter.ActorAlign.CENTER,
+            x_expand: true,
         });
-        this._textBox.add_child(this._tempLabel);
-        this._textBox.add_child(this._metaLabel);
 
         this._settingsButton = new St.Button({
             style_class: 'aera-widget-settings-button',
@@ -96,10 +107,55 @@ export class AeraWeatherWidget {
             this._setPanelVisible(this._settingsButton.checked);
         });
 
-        this._row.add_child(this._icon);
-        this._row.add_child(this._textBox);
-        this._row.add_child(this._settingsButton);
-        this.actor.add_child(this._row);
+        this._headerRow = new St.BoxLayout({
+            style_class: 'aera-weather-header',
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this._headerRow.add_child(this._placeLabel);
+        this._headerRow.add_child(this._settingsButton);
+
+        this._tempLabel = new St.Label({
+            style_class: 'aera-weather-temp',
+            text: '—',
+            x_align: Clutter.ActorAlign.START,
+        });
+
+        this._icon = new St.Icon({
+            icon_name: 'weather-clear-symbolic',
+            style_class: 'aera-weather-icon',
+            icon_size: 48,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this._summaryLabel = new St.Label({
+            style_class: 'aera-weather-summary',
+            text: '',
+            x_align: Clutter.ActorAlign.START,
+        });
+        this._feelsLabel = new St.Label({
+            style_class: 'aera-weather-feels',
+            text: '',
+            x_align: Clutter.ActorAlign.START,
+            visible: false,
+        });
+        this._summaryBox = new St.BoxLayout({
+            vertical: true,
+            x_expand: true,
+            style_class: 'aera-weather-summary-box',
+        });
+        this._summaryBox.add_child(this._summaryLabel);
+        this._summaryBox.add_child(this._feelsLabel);
+
+        this._bottomRow = new St.BoxLayout({
+            style_class: 'aera-weather-bottom',
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this._bottomRow.add_child(this._icon);
+        this._bottomRow.add_child(this._summaryBox);
+
+        this._textBox.add_child(this._headerRow);
+        this._textBox.add_child(this._tempLabel);
+        this._textBox.add_child(this._bottomRow);
+        this.actor.add_child(this._textBox);
 
         // ── Compact error row ────────────────────────────────────────────────
         this._errorBox = new St.BoxLayout({
@@ -244,20 +300,37 @@ export class AeraWeatherWidget {
         this._state = state;
         if (state === 'loading') {
             this._errorBox.hide();
-            this._row.show();
+            this._textBox.show();
             this._tempLabel.set_text('···');
-            this._metaLabel.set_text(detail);
+            this._summaryLabel.set_text(detail);
+            this._feelsLabel.visible = false;
             this._startPulse();
         } else if (state === 'error') {
             this._stopPulse();
-            this._row.hide();
+            this._textBox.hide();
             this._errorLabel.set_text(detail || 'Unavailable');
             this._errorBox.show();
         } else {
             this._stopPulse();
             this._errorBox.hide();
-            this._row.show();
+            this._textBox.show();
         }
+    }
+
+    // Full-color status icons from the hicolor theme (as the reference does),
+    // falling back to the themed symbolic icon when none is installed.
+    _setWeatherIcon(iconName) {
+        const base = `${iconName}`.replace(/-symbolic$/, '');
+        for (const suffix of ['-large', '-small', '']) {
+            const file = Gio.File.new_for_path(GLib.build_filenamev(
+                ['/usr/share/icons/hicolor/scalable/status', `${base}${suffix}.svg`]));
+            if (file.query_exists(null)) {
+                this._icon.gicon = Gio.FileIcon.new(file);
+                return;
+            }
+        }
+        this._icon.gicon = null;
+        this._icon.icon_name = iconName;
     }
 
     _startPulse() {
@@ -330,18 +403,16 @@ export class AeraWeatherWidget {
     async _fetchWeather(lat, lon) {
         const seq = ++this._fetchSeq;
         const units = this._effectiveUnits();
+        const unitChar = units === 'imperial' ? 'F' : 'C';
         const url = 'https://api.open-meteo.com/v1/forecast'
             + `?latitude=${lat}&longitude=${lon}`
-            + '&current=temperature_2m,weather_code'
+            + '&current=temperature_2m,apparent_temperature,weather_code'
             + `&temperature_unit=${units === 'imperial' ? 'fahrenheit' : 'celsius'}`
             + '&timezone=auto';
 
         this._setState('loading', 'Loading weather…');
         try {
-            const response = await fetch(url);
-            if (!response.ok)
-                throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
+            const data = await httpGetJson(url);
 
             if (this._destroyed || seq !== this._fetchSeq)
                 return;
@@ -349,10 +420,18 @@ export class AeraWeatherWidget {
             const temp = Math.round(data.current.temperature_2m);
             const info = weatherFromCode(Number(data.current.weather_code));
 
-            this._icon.icon_name = info.icon;
-            this._tempLabel.set_text(`${temp}°${units === 'imperial' ? 'F' : 'C'}`);
-            this._metaLabel.set_text(
-                this._place ? `${info.label} · ${this._place}` : info.label);
+            this._setWeatherIcon(info.icon);
+            this._tempLabel.set_text(`${temp}°${unitChar}`);
+            this._summaryLabel.set_text(info.label);
+            const feels = Number(data.current.apparent_temperature);
+            if (Number.isFinite(feels)) {
+                this._feelsLabel.set_text(
+                    `Feels like ${Math.round(feels)}°${unitChar}`);
+                this._feelsLabel.visible = true;
+            } else {
+                this._feelsLabel.visible = false;
+            }
+            this._placeLabel.set_text(this._place);
             this._setState('ready');
         } catch (e) {
             if (this._destroyed || seq !== this._fetchSeq)
@@ -373,10 +452,7 @@ export class AeraWeatherWidget {
             const url = 'https://geocoding-api.open-meteo.com/v1/search'
                 + '?count=1&language=en'
                 + `&name=${encodeURIComponent(query)}`;
-            const response = await fetch(url);
-            if (!response.ok)
-                throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
+            const data = await httpGetJson(url);
 
             if (this._destroyed)
                 return;
@@ -427,8 +503,10 @@ export class AeraWeatherWidget {
                 GEOCLUE_BUS, '/org/freedesktop/GeoClue2/Manager',
                 `${GEOCLUE_BUS}.Manager`, null);
 
+            // No-argument D-Bus calls take null parameters — a GLib.Variant
+            // built from '()' throws in GJS because there is no value to pack.
             const reply = manager.call_sync('GetClient',
-                new GLib.Variant('()'), Gio.DBusCallFlags.NONE, -1, null);
+                null, Gio.DBusCallFlags.NONE, -1, null);
             const [clientPath] = reply.deep_unpack();
 
             this._geoClientProxy = Gio.DBusProxy.new_for_bus_sync(
@@ -439,7 +517,9 @@ export class AeraWeatherWidget {
             // id — GeoClue's consent agent validates it.
             this._geoSetProp('DesktopId',
                 new GLib.Variant('s', 'org.gnome.Shell.desktop'));
-            this._geoSetProp('AccuracyLevel',
+            // GeoClue 2.7 renamed the writable property to
+            // RequestedAccuracyLevel (AccuracyLevel was read-only there).
+            this._geoSetProp('RequestedAccuracyLevel',
                 new GLib.Variant('u', GEOCLUE_ACCURACY_CITY));
 
             this._geoSignalId = this._geoClientProxy.connectSignal(
@@ -447,7 +527,7 @@ export class AeraWeatherWidget {
                     this._onLocationUpdated(args));
 
             this._geoClientProxy.call_sync('Start',
-                new GLib.Variant('()'), Gio.DBusCallFlags.NONE, -1, null);
+                null, Gio.DBusCallFlags.NONE, -1, null);
 
             this._geoTimeoutId = GLib.timeout_add_seconds(
                 GLib.PRIORITY_DEFAULT, 30, () => {
@@ -478,7 +558,9 @@ export class AeraWeatherWidget {
     }
 
     _onLocationUpdated(args) {
-        const [locationPath] = args.deep_unpack();
+        // Signal payload is (old, new) — before the first fix `old` is '/',
+        // so the NEW path is the one to follow.
+        const [, locationPath] = args.deep_unpack();
         if (!locationPath || locationPath === '/')
             return;
 
@@ -524,7 +606,7 @@ export class AeraWeatherWidget {
             }
             try {
                 this._geoClientProxy.call_sync('Stop',
-                    new GLib.Variant('()'), Gio.DBusCallFlags.NONE, 500, null);
+                    null, Gio.DBusCallFlags.NONE, 500, null);
             } catch (e) {
                 // Session may already be gone; nothing to release.
             }

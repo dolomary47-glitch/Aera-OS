@@ -36,19 +36,37 @@
     border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-/* ── Weather row ────────────────────────────────────────────────────────────── */
+/* ── Weather card rows ──────────────────────────────────────────────────────── */
 .aera-weather-row {
     spacing: 12px; /* space.3 */
 }
 
 .aera-weather-text {
-    spacing: 2px;
+    spacing: 4px; /* space.1 */
 }
 
-/* type.metric — temperature value */
-.aera-weather-temp {
-    font-size: 20px;
+.aera-weather-header {
+    spacing: 8px; /* space.2 */
+}
+
+/* type.label — place name in the header */
+.aera-weather-place {
+    font-size: 13px;
     font-weight: 600;
+}
+
+.aera-widgets-root.aera-light .aera-weather-place {
+    color: #4B5563; /* light.text.secondary */
+}
+
+.aera-widgets-root.aera-dark .aera-weather-place {
+    color: #C6CBD3; /* dark.text.secondary */
+}
+
+/* type.hero — temperature value */
+.aera-weather-temp {
+    font-size: 44px;
+    font-weight: 700;
 }
 
 .aera-widgets-root.aera-light .aera-weather-temp {
@@ -59,21 +77,45 @@
     color: #FFFFFF; /* dark.text.primary */
 }
 
-/* type.caption — condition · location */
-.aera-weather-meta {
+.aera-weather-bottom {
+    spacing: 12px; /* space.3 */
+    margin-top: 4px; /* space.1 */
+}
+
+.aera-weather-summary-box {
+    spacing: 2px;
+}
+
+/* type.label — condition summary */
+.aera-weather-summary {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.aera-widgets-root.aera-light .aera-weather-summary {
+    color: #111827; /* light.text.primary */
+}
+
+.aera-widgets-root.aera-dark .aera-weather-summary {
+    color: #FFFFFF; /* dark.text.primary */
+}
+
+/* type.caption — feels-like line */
+.aera-weather-feels {
     font-size: 11px;
     font-weight: 500;
 }
 
-.aera-widgets-root.aera-light .aera-weather-meta {
-    color: #4B5563; /* light.text.secondary */
+.aera-widgets-root.aera-light .aera-weather-feels {
+    color: #9CA3AF; /* light.text.muted */
 }
 
-.aera-widgets-root.aera-dark .aera-weather-meta {
-    color: #C6CBD3; /* dark.text.secondary */
+.aera-widgets-root.aera-dark .aera-weather-feels {
+    color: #8E95A2; /* dark.text.muted */
 }
 
-/* Themed symbolic weather icons are recolored via CSS `color` */
+/* Symbolic fallback icons are recolored via CSS `color`; full-color hicolor
+ * SVGs ignore it. */
 .aera-weather-icon {
     color: #4B5563; /* light.text.secondary */
 }

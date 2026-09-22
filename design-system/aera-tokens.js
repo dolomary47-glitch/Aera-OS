@@ -76,6 +76,7 @@ export const glass = {
 
 export const type = {
     display: { size: '80px', weight: '700' },
+    hero:    { size: '44px', weight: '700' },
     metric:  { size: '20px', weight: '600' },
     label:   { size: '13px', weight: '600' },
     caption: { size: '11px', weight: '500' },
